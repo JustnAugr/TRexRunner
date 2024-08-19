@@ -1,0 +1,1 @@
+Messing around a bit with XNA/MonoGame based game development, following the following tutorial to create a version of Google Chrome's TRexRunner game: https://www.youtube.com/playlist?list=PLG2i_rSSIXXoFdh3WCDtGumklyIXt4KiY
