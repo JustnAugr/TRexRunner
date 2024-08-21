@@ -15,6 +15,12 @@ public class TRexRunnerGame : Game
     private const string ASSET_NAME_SFX_SCORE_REACHED = "score-reached";
     private const string ASSET_NAME_SFX_BUTTON_PRESS = "button-press";
 
+    public const int WINDOW_WIDTH = 600;
+    public const int WINDOW_HEIGHT = 150;
+
+    public const int TREX_START_POS_Y = WINDOW_HEIGHT - 16;
+    public const int TREX_START_POS_X = 1;
+
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
@@ -26,7 +32,7 @@ public class TRexRunnerGame : Game
     private Texture2D _spriteSheetTexture;
 
     private Trex _trex;
-
+    
     public TRexRunnerGame()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -36,9 +42,11 @@ public class TRexRunnerGame : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-
         base.Initialize();
+
+        _graphics.PreferredBackBufferHeight = WINDOW_HEIGHT;
+        _graphics.PreferredBackBufferWidth = WINDOW_WIDTH;
+        _graphics.ApplyChanges();
     }
 
     protected override void LoadContent()
@@ -53,7 +61,10 @@ public class TRexRunnerGame : Game
         _sfxScoreReached = Content.Load<SoundEffect>(ASSET_NAME_SFX_SCORE_REACHED);
         _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
 
-        _trex = new Trex(_spriteSheetTexture, new Vector2(20, 20));
+        //offsetting the position here by it's height as we draw from the top left corner
+        //if we didn't, the top left corner of the dino would be drawn there, quite low on the screen
+        _trex = new Trex(_spriteSheetTexture,
+            new Vector2(TREX_START_POS_X, TREX_START_POS_Y - Trex.TREX_DEFAULT_SPRITE_HEIGHT));
     }
 
     protected override void Update(GameTime gameTime)
@@ -69,7 +80,7 @@ public class TRexRunnerGame : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.White);
 
         _spriteBatch.Begin();
         _trex.Draw(_spriteBatch, gameTime);
