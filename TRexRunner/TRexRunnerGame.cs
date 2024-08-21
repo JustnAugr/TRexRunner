@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -6,8 +7,21 @@ namespace TRexRunner;
 
 public class TRexRunnerGame : Game
 {
+    //storing constants for our assets in the content pipeline
+    private const string ASSET_NAME_SPRITESHEET = "TrexSpritesheet";
+    private const string ASSET_NAME_SFX_HIT = "hit";
+    private const string ASSET_NAME_SFX_SCORE_REACHED = "score-reached";
+    private const string ASSET_NAME_SFX_BUTTON_PRESS = "button-press";
+
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+
+    //in a larger game, this should probably be a separate asset manager class that handles this
+    private SoundEffect _sfxHit;
+    private SoundEffect _sfxScoreReached;
+    private SoundEffect _sfxButtonPress;
+
+    private Texture2D _spriteSheetTexture;
 
     public TRexRunnerGame()
     {
@@ -27,7 +41,13 @@ public class TRexRunnerGame : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        // TODO: use this.Content to load your game content here
+        //load our assets
+        //notably we're loading the sounds as SoundEffects, this has to match the processor
+        //that we have set in the mgcb-editor tool. by default, it originally chose song for mp3s
+        _sfxButtonPress = Content.Load<SoundEffect>(ASSET_NAME_SFX_BUTTON_PRESS);
+        _sfxHit = Content.Load<SoundEffect>(ASSET_NAME_SFX_HIT);
+        _sfxScoreReached = Content.Load<SoundEffect>(ASSET_NAME_SFX_SCORE_REACHED);
+        _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
     }
 
     protected override void Update(GameTime gameTime)
@@ -45,10 +65,9 @@ public class TRexRunnerGame : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // TODO: Add your drawing code here
         _spriteBatch.Begin();
-        
-        _spriteBatch.End(); 
+        _spriteBatch.Draw(_spriteSheetTexture, new Vector2(10, 10), Color.White);
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }
