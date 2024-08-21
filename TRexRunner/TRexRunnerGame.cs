@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using TRexRunner.Graphics;
 
 namespace TRexRunner;
 
@@ -66,7 +67,8 @@ public class TRexRunnerGame : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
-        _spriteBatch.Draw(_spriteSheetTexture, new Vector2(10, 10), Color.White);
+        Sprite sprite = new Sprite(_spriteSheetTexture, 848, 0, 44, 52);
+        sprite.Draw(_spriteBatch, new Vector2(20, 20));
         _spriteBatch.End();
 
         base.Draw(gameTime);

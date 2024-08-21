@@ -7,15 +7,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/TRexRunner/Content/TrexSpritesheet.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TRexRunner/Content/button-press.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TRexRunner/Content/hit.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TRexRunner/Content/score-reached.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/projectSettingsUpdater.xml" afterDir="false" />
+    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="Loading and drawing assets">
+      <change afterPath="$PROJECT_DIR$/TRexRunner/Graphics/Sprite.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TRexRunner/Content/Content.mgcb" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Content/Content.mgcb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TRexRunner.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TRexRunner/TRexRunner.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/TRexRunner.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,6 +27,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49bab08708434a08802510b75a8ea3691b3400/47/d871df8b/Game.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49bab08708434a08802510b75a8ea3691b3400/e0/77223ee2/Curve.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/59109b68aa8966a8b4c17bb8642684239e9598dc1f117d294c355534a932786/CastHelpers.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -75,6 +72,11 @@
     ]
   }
 }]]></component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="generate constructor" />
+    </option>
+  </component>
   <component name="RunManager">
     <configuration name="TRexRunner" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
@@ -106,8 +108,16 @@
       <workItem from="1723942072024" duration="2248000" />
       <workItem from="1724201187739" duration="28000" />
       <workItem from="1724201260470" duration="83000" />
-      <workItem from="1724201354340" duration="2251000" />
+      <workItem from="1724201354340" duration="3206000" />
     </task>
+    <task id="LOCAL-00001" summary="Loading and drawing assets">
+      <created>1724204011278</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1724204011278</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,5 +140,7 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Loading and drawing assets" />
+    <option name="LAST_COMMIT_MESSAGE" value="Loading and drawing assets" />
   </component>
 </project>
