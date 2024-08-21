@@ -7,17 +7,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="Loading and drawing assets">
-      <change afterPath="$PROJECT_DIR$/TRexRunner/Graphics/Sprite.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TRexRunner.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner.sln.DotSettings.user" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TRexRunner/TRexRunner.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/TRexRunner.csproj" afterDir="false" />
+    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="Following the DRY principal by abstracting to a Sprite class to draw our dino">
+      <change afterPath="$PROJECT_DIR$/TRexRunner/Entities/IGameEntity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TRexRunner/Entities/TrexState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
   </component>
   <component name="DpaMonitoringSettings">
     <option name="autoShow" value="false" />
@@ -108,7 +112,7 @@
       <workItem from="1723942072024" duration="2248000" />
       <workItem from="1724201187739" duration="28000" />
       <workItem from="1724201260470" duration="83000" />
-      <workItem from="1724201354340" duration="3206000" />
+      <workItem from="1724201354340" duration="4010000" />
     </task>
     <task id="LOCAL-00001" summary="Loading and drawing assets">
       <created>1724204011278</created>
@@ -117,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724204011278</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Following the DRY principal by abstracting to a Sprite class to draw our dino">
+      <created>1724205065766</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1724205065766</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,6 +152,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Loading and drawing assets" />
-    <option name="LAST_COMMIT_MESSAGE" value="Loading and drawing assets" />
+    <MESSAGE value="Following the DRY principal by abstracting to a Sprite class to draw our dino" />
+    <option name="LAST_COMMIT_MESSAGE" value="Following the DRY principal by abstracting to a Sprite class to draw our dino" />
   </component>
 </project>
