@@ -32,7 +32,7 @@ public class TRexRunnerGame : Game
     private Texture2D _spriteSheetTexture;
 
     private Trex _trex;
-    
+
     public TRexRunnerGame()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -73,7 +73,7 @@ public class TRexRunnerGame : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        _trex.Update(gameTime);
 
         base.Update(gameTime);
     }

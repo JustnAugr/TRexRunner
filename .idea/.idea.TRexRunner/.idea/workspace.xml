@@ -7,7 +7,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="IGameEntity, basic Trex implementation as a class">
+    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/TRexRunner/Graphics/SpriteAnimation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TRexRunner/Graphics/SpriteAnimationFrame.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" afterDir="false" />
@@ -32,13 +34,14 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49bab08708434a08802510b75a8ea3691b3400/47/d871df8b/Game.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49bab08708434a08802510b75a8ea3691b3400/e0/77223ee2/Curve.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/59109b68aa8966a8b4c17bb8642684239e9598dc1f117d294c355534a932786/CastHelpers.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/657772264a38a88aa37b6b6dbc5cd8c4d16161d33e8d834887ecf824b5b4d7d7/Max.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="Toolset" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -51,30 +54,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Project.TRexRunner.executor": "Run",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "terminal",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Project.TRexRunner.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\justn\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\justn\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\justn\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\justn\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\justn\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\justn\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="generate constructor" />
@@ -111,7 +114,10 @@
       <workItem from="1723942072024" duration="2248000" />
       <workItem from="1724201187739" duration="28000" />
       <workItem from="1724201260470" duration="83000" />
-      <workItem from="1724201354340" duration="4799000" />
+      <workItem from="1724201354340" duration="5136000" />
+      <workItem from="1724206965157" duration="849000" />
+      <workItem from="1724263974217" duration="6588000" />
+      <workItem from="1724291565472" duration="97000" />
     </task>
     <task id="LOCAL-00001" summary="Loading and drawing assets">
       <created>1724204011278</created>
@@ -134,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724205820256</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Trex placement, idle state background">
+      <created>1724206806285</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1724206806285</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,6 +173,7 @@
     <MESSAGE value="Loading and drawing assets" />
     <MESSAGE value="Following the DRY principal by abstracting to a Sprite class to draw our dino" />
     <MESSAGE value="IGameEntity, basic Trex implementation as a class" />
-    <option name="LAST_COMMIT_MESSAGE" value="IGameEntity, basic Trex implementation as a class" />
+    <MESSAGE value="Trex placement, idle state background" />
+    <option name="LAST_COMMIT_MESSAGE" value="Trex placement, idle state background" />
   </component>
 </project>
