@@ -44,6 +44,8 @@ public class TRexRunnerGame : Game
 
     private Trex _trex;
 
+    private ScoreBoard _scoreBoard;
+
     private KeyboardState _previousKeyboardState;
 
     public GameState State { get; private set; }
@@ -91,11 +93,15 @@ public class TRexRunnerGame : Game
         //subscribe to the JumpComplete event on the trex, trigger this method when the event fires
         _trex.JumpComplete += TrexOnJumpComplete;
 
+        _scoreBoard = new ScoreBoard(_spriteSheetTexture, new Vector2(WINDOW_WIDTH - 100, 10));
+        _scoreBoard.Score = 1; //to test...
+        
         _inputController = new InputController(_trex);
         _groundManager = new GroundManager(_spriteSheetTexture, _entityManager, _trex);
         
         _entityManager.AddEntity(_trex);
         _entityManager.AddEntity(_groundManager);
+        _entityManager.AddEntity(_scoreBoard);
         
         _groundManager.Initialize();
     }
