@@ -33,6 +33,8 @@ public class Trex : IGameEntity
     private const int TREX_DUCKING_SPRITE_ONE_POS_X = TREX_DEFAULT_SPRITE_POS_X + TREX_DEFAULT_SPRITE_WIDTH * 6;
     private const int TREX_DUCKING_SPRITE_ONE_POS_Y = 0;
     private const float DROP_VELOCITY = 600f;
+    
+    private const float START_SPEED = 240f;
 
     private Sprite _idleBackgroundSprite;
     private Sprite _idleSprite;
@@ -43,6 +45,8 @@ public class Trex : IGameEntity
     private SpriteAnimation _blinkAnimation;
     private SpriteAnimation _runAnimation;
     private SpriteAnimation _duckAnimation;
+
+    public event EventHandler JumpComplete;
 
     public Vector2 Position { get; set; }
 
@@ -106,6 +110,12 @@ public class Trex : IGameEntity
         _duckAnimation.Play();
     }
 
+    public void Initialize()
+    {
+        Speed = START_SPEED;
+        State = TrexState.Running; //should be set to running on the end of the jump, but for good measure we make explicit here
+    }
+
     public void Update(GameTime gameTime)
     {
         if (State == TrexState.Idle)
@@ -138,6 +148,9 @@ public class Trex : IGameEntity
                 Position = new Vector2(Position.X, _startPosY);
                 _verticalVelocity = 0;
                 State = TrexState.Running;
+                
+                //fire the event as we've completed our Jump
+                OnJumpComplete();
             }
         }
         else if (State == TrexState.Running)
@@ -247,5 +260,13 @@ public class Trex : IGameEntity
         _dropVelocity = DROP_VELOCITY;
 
         return true;
+    }
+
+    protected virtual void OnJumpComplete()
+    {
+        //using an event to signal when we completed a jump and can have the ground start moving, for the game to really 'start'
+        //clients can sub to this event by adding a method with a matching signature -> which we'll do
+        EventHandler handler = JumpComplete;
+        handler?.Invoke(this, EventArgs.Empty);
     }
 }

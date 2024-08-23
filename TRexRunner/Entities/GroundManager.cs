@@ -45,9 +45,6 @@ public class GroundManager : IGameEntity
 
     public void Update(GameTime gameTime)
     {
-        if (_trex.State == TrexState.Idle)
-            return;
-        
         //being less than 0 means the ground tile has started to move off screen, so we need another after it
         //to prevent empty spaces to the right
         float maxPosX = _groundTiles.Max(g => g.PositionX);

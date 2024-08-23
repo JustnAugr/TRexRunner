@@ -87,12 +87,26 @@ public class TRexRunnerGame : Game
         _trex = new Trex(_spriteSheetTexture,
             new Vector2(TREX_START_POS_X, TREX_START_POS_Y - Trex.TREX_DEFAULT_SPRITE_HEIGHT), _sfxButtonPress);
         _trex.DrawOrder = 10; //ensure drawn on top of the ground
+        
+        //subscribe to the JumpComplete event on the trex, trigger this method when the event fires
+        _trex.JumpComplete += TrexOnJumpComplete;
 
-        _entityManager.AddEntity(_trex);
         _inputController = new InputController(_trex);
         _groundManager = new GroundManager(_spriteSheetTexture, _entityManager, _trex);
+        
+        _entityManager.AddEntity(_trex);
         _entityManager.AddEntity(_groundManager);
+        
         _groundManager.Initialize();
+    }
+
+    private void TrexOnJumpComplete(object sender, EventArgs e)
+    {
+        if (State == GameState.Transition)
+        {
+            State = GameState.Playing;
+            _trex.Initialize();
+        }
     }
 
     protected override void Update(GameTime gameTime)
@@ -110,10 +124,6 @@ public class TRexRunnerGame : Game
         else if (State == GameState.Transition)
         {
             _fadeInTexturePosX += (float)gameTime.ElapsedGameTime.TotalSeconds * FADE_IN_ANIMATION_SPEED;
-
-            //make sure we transition to playing when the animation is done
-            if (_fadeInTexturePosX > WINDOW_WIDTH)
-                State = GameState.Playing;
         }
         else if (State == GameState.Initial)
         {
