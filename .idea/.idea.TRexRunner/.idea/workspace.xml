@@ -8,10 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/TRexRunner/Graphics/SpriteAnimation.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TRexRunner/Graphics/SpriteAnimationFrame.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TRexRunner/System/InputController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TRexRunner/Graphics/SpriteAnimation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Graphics/SpriteAnimation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,6 +32,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49bab08708434a08802510b75a8ea3691b3400/47/d871df8b/Game.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49bab08708434a08802510b75a8ea3691b3400/4a/eccb524b/Keyboard.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49bab08708434a08802510b75a8ea3691b3400/e0/77223ee2/Curve.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/59109b68aa8966a8b4c17bb8642684239e9598dc1f117d294c355534a932786/CastHelpers.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/657772264a38a88aa37b6b6dbc5cd8c4d16161d33e8d834887ecf824b5b4d7d7/Max.cs" root0="SKIP_HIGHLIGHTING" />
@@ -61,6 +62,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.24134079&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -118,6 +120,8 @@
       <workItem from="1724206965157" duration="849000" />
       <workItem from="1724263974217" duration="6588000" />
       <workItem from="1724291565472" duration="97000" />
+      <workItem from="1724292663023" duration="462000" />
+      <workItem from="1724422008206" duration="3268000" />
     </task>
     <task id="LOCAL-00001" summary="Loading and drawing assets">
       <created>1724204011278</created>
@@ -147,7 +151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724206806285</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="working trex blinking animation">
+      <created>1724292886641</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1724292886641</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,6 +185,7 @@
     <MESSAGE value="Following the DRY principal by abstracting to a Sprite class to draw our dino" />
     <MESSAGE value="IGameEntity, basic Trex implementation as a class" />
     <MESSAGE value="Trex placement, idle state background" />
-    <option name="LAST_COMMIT_MESSAGE" value="Trex placement, idle state background" />
+    <MESSAGE value="working trex blinking animation" />
+    <option name="LAST_COMMIT_MESSAGE" value="working trex blinking animation" />
   </component>
 </project>

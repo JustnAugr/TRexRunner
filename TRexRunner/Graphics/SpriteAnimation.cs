@@ -97,4 +97,11 @@ public class SpriteAnimation
 
         return _frames[index];
     }
+
+    public void Clear()
+    {
+        //lets us reuse a single instance object
+        Stop();
+        _frames.Clear();
+    }
 }

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TRexRunner.Entities;
 using TRexRunner.Graphics;
+using TRexRunner.System;
 
 namespace TRexRunner;
 
@@ -32,6 +33,8 @@ public class TRexRunnerGame : Game
     private Texture2D _spriteSheetTexture;
 
     private Trex _trex;
+
+    private InputController _inputController;
 
     public TRexRunnerGame()
     {
@@ -64,7 +67,9 @@ public class TRexRunnerGame : Game
         //offsetting the position here by it's height as we draw from the top left corner
         //if we didn't, the top left corner of the dino would be drawn there, quite low on the screen
         _trex = new Trex(_spriteSheetTexture,
-            new Vector2(TREX_START_POS_X, TREX_START_POS_Y - Trex.TREX_DEFAULT_SPRITE_HEIGHT));
+            new Vector2(TREX_START_POS_X, TREX_START_POS_Y - Trex.TREX_DEFAULT_SPRITE_HEIGHT), _sfxButtonPress);
+
+        _inputController = new InputController(_trex);
     }
 
     protected override void Update(GameTime gameTime)
@@ -73,9 +78,10 @@ public class TRexRunnerGame : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        _trex.Update(gameTime);
-
         base.Update(gameTime);
+        
+        _inputController.ProcessControls(gameTime);
+        _trex.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
