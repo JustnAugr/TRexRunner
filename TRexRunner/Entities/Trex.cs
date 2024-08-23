@@ -25,6 +25,10 @@ public class Trex : IGameEntity
     private const float BLINK_ANIMATION_RANDOM_MAX = 10f;
     private const float BLINK_ANIMATION_EYE_CLOSE_TIME = .5f;
 
+    private const int TREX_RUNNING_SPRITE_ONE_POS_X = TREX_DEFAULT_SPRITE_POS_X + TREX_DEFAULT_SPRITE_WIDTH * 2;
+    private const int TREX_RUNNING_SPRITE_ONE_POS_Y = 0;
+    private const float RUN_ANIMATION_FRAME_LENGTH = 1/10f; //10fps, 1 frame per 10 seconds
+
     private Sprite _idleBackgroundSprite;
     private SpriteAnimation _blinkAnimation;
 
@@ -32,6 +36,8 @@ public class Trex : IGameEntity
     private Sprite _idleBlinkSprite;
 
     private SoundEffect _jumpSound;
+
+    private SpriteAnimation _runAnimation;
 
     public Vector2 Position { get; set; }
 
@@ -72,6 +78,16 @@ public class Trex : IGameEntity
         _blinkAnimation.Play();
 
         _startPosY = position.Y;
+
+        _runAnimation = new SpriteAnimation();
+        _runAnimation.AddFrame(new Sprite(spriteSheet, TREX_RUNNING_SPRITE_ONE_POS_X, TREX_RUNNING_SPRITE_ONE_POS_Y,
+            TREX_DEFAULT_SPRITE_WIDTH, TREX_DEFAULT_SPRITE_HEIGHT), 0);
+        _runAnimation.AddFrame(new Sprite(spriteSheet, TREX_RUNNING_SPRITE_ONE_POS_X + TREX_DEFAULT_SPRITE_WIDTH,
+            TREX_RUNNING_SPRITE_ONE_POS_Y,
+            TREX_DEFAULT_SPRITE_WIDTH, TREX_DEFAULT_SPRITE_HEIGHT), RUN_ANIMATION_FRAME_LENGTH);
+        //fake ending sprite, has to be *2 because it's timestamp in overall animation not duration
+        _runAnimation.AddFrame(_runAnimation[0].Sprite, RUN_ANIMATION_FRAME_LENGTH * 2); 
+        _runAnimation.Play();
     }
 
     public void Update(GameTime gameTime)
@@ -98,14 +114,18 @@ public class Trex : IGameEntity
             //make sure we set ourselves as falling if our velocity has changed to positive (sending us downward)
             if (_verticalVelocity >= 0)
                 State = TrexState.Falling;
-            
+
             //so we don't fall through the floor because of gravity, we essentially cap how low our y position can go
             if (Position.Y >= _startPosY)
             {
                 Position = new Vector2(Position.X, _startPosY);
                 _verticalVelocity = 0;
-                State = TrexState.Idle; //should probably be running later
+                State = TrexState.Running;
             }
+        }
+        else if (State == TrexState.Running)
+        {
+            _runAnimation.Update(gameTime);
         }
     }
 
@@ -120,6 +140,10 @@ public class Trex : IGameEntity
         else if (State is TrexState.Jumping or TrexState.Falling)
         {
             _idleSprite.Draw(spriteBatch, Position);
+        }
+        else if (State == TrexState.Running)
+        {
+            _runAnimation.Draw(spriteBatch, Position);
         }
     }
 
@@ -162,7 +186,7 @@ public class Trex : IGameEntity
         //just set a higher velocity that will have us head to the ground faster
         //if we're closer to 0 already (falling faster) then send us to 0
         _verticalVelocity = _verticalVelocity < CANCEL_JUMP_VELOCITY ? CANCEL_JUMP_VELOCITY : 0;
-        
+
         return true;
     }
 }
