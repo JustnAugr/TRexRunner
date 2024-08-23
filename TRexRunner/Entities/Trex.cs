@@ -27,17 +27,22 @@ public class Trex : IGameEntity
 
     private const int TREX_RUNNING_SPRITE_ONE_POS_X = TREX_DEFAULT_SPRITE_POS_X + TREX_DEFAULT_SPRITE_WIDTH * 2;
     private const int TREX_RUNNING_SPRITE_ONE_POS_Y = 0;
-    private const float RUN_ANIMATION_FRAME_LENGTH = 1/10f; //10fps, 1 frame per 10 seconds
+    private const float RUN_ANIMATION_FRAME_LENGTH = 1 / 10f; //10fps, 1 frame per 10 seconds
+
+    private const int TREX_DUCKING_SPRITE_WIDTH = 59;
+    private const int TREX_DUCKING_SPRITE_ONE_POS_X = TREX_DEFAULT_SPRITE_POS_X + TREX_DEFAULT_SPRITE_WIDTH * 6;
+    private const int TREX_DUCKING_SPRITE_ONE_POS_Y = 0;
+    private const float DROP_VELOCITY = 600f;
 
     private Sprite _idleBackgroundSprite;
-    private SpriteAnimation _blinkAnimation;
-
     private Sprite _idleSprite;
     private Sprite _idleBlinkSprite;
 
     private SoundEffect _jumpSound;
 
+    private SpriteAnimation _blinkAnimation;
     private SpriteAnimation _runAnimation;
+    private SpriteAnimation _duckAnimation;
 
     public Vector2 Position { get; set; }
 
@@ -52,8 +57,8 @@ public class Trex : IGameEntity
     private Random _random;
 
     private float _verticalVelocity;
-
     private float _startPosY;
+    private float _dropVelocity;
 
     public Trex(Texture2D spriteSheet, Vector2 position, SoundEffect jumpSound)
     {
@@ -86,8 +91,19 @@ public class Trex : IGameEntity
             TREX_RUNNING_SPRITE_ONE_POS_Y,
             TREX_DEFAULT_SPRITE_WIDTH, TREX_DEFAULT_SPRITE_HEIGHT), RUN_ANIMATION_FRAME_LENGTH);
         //fake ending sprite, has to be *2 because it's timestamp in overall animation not duration
-        _runAnimation.AddFrame(_runAnimation[0].Sprite, RUN_ANIMATION_FRAME_LENGTH * 2); 
+        _runAnimation.AddFrame(_runAnimation[0].Sprite, RUN_ANIMATION_FRAME_LENGTH * 2);
         _runAnimation.Play();
+
+        //this is using the default height, but shouldn't it be shorter? when ducking, we ARE shorter...
+        _duckAnimation = new SpriteAnimation();
+        _duckAnimation.AddFrame(new Sprite(spriteSheet, TREX_DUCKING_SPRITE_ONE_POS_X, TREX_DUCKING_SPRITE_ONE_POS_Y,
+            TREX_DUCKING_SPRITE_WIDTH, TREX_DEFAULT_SPRITE_HEIGHT), 0);
+        _duckAnimation.AddFrame(new Sprite(spriteSheet, TREX_DUCKING_SPRITE_ONE_POS_X + TREX_DUCKING_SPRITE_WIDTH,
+            TREX_DUCKING_SPRITE_ONE_POS_Y,
+            TREX_DUCKING_SPRITE_WIDTH, TREX_DEFAULT_SPRITE_HEIGHT), RUN_ANIMATION_FRAME_LENGTH);
+        //fake ending sprite, has to be *2 because it's timestamp in overall animation not duration
+        _duckAnimation.AddFrame(_duckAnimation[0].Sprite, RUN_ANIMATION_FRAME_LENGTH * 2);
+        _duckAnimation.Play();
     }
 
     public void Update(GameTime gameTime)
@@ -108,7 +124,8 @@ public class Trex : IGameEntity
             //scale by time to be frame independent, and making sure our velocity is in measure of pixels PER SECOND, not dependent on frames
             //this is what sends us to the ground (or up to the sky :])
             Position = new Vector2(Position.X,
-                Position.Y + _verticalVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                Position.Y + _verticalVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds +
+                _dropVelocity * (float)gameTime.ElapsedGameTime.TotalSeconds);
             _verticalVelocity += GRAVITY * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //make sure we set ourselves as falling if our velocity has changed to positive (sending us downward)
@@ -127,6 +144,12 @@ public class Trex : IGameEntity
         {
             _runAnimation.Update(gameTime);
         }
+        else if (State == TrexState.Ducking)
+        {
+            _duckAnimation.Update(gameTime);
+        }
+
+        _dropVelocity = 0;
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -144,6 +167,10 @@ public class Trex : IGameEntity
         else if (State == TrexState.Running)
         {
             _runAnimation.Draw(spriteBatch, Position);
+        }
+        else if (State == TrexState.Ducking)
+        {
+            _duckAnimation.Draw(spriteBatch, Position);
         }
     }
 
@@ -181,11 +208,43 @@ public class Trex : IGameEntity
         if (State != TrexState.Jumping || (_startPosY - Position.Y) < MIN_JUMP_HEIGHT)
             return false;
 
-        State = TrexState.Falling;
         //rather than immediately sending us to 0 velocity which will throw us to the ground really quickly,
         //just set a higher velocity that will have us head to the ground faster
         //if we're closer to 0 already (falling faster) then send us to 0
         _verticalVelocity = _verticalVelocity < CANCEL_JUMP_VELOCITY ? CANCEL_JUMP_VELOCITY : 0;
+
+        return true;
+    }
+
+    public bool Duck()
+    {
+        if (State is TrexState.Jumping or TrexState.Falling)
+            return false;
+
+        State = TrexState.Ducking;
+
+        return true;
+    }
+
+    public bool GetUp()
+    {
+        if (State != TrexState.Ducking)
+            return false;
+
+        State = TrexState.Running;
+
+        return true;
+    }
+
+    public bool Drop()
+    {
+        if (State is not (TrexState.Jumping or TrexState.Falling))
+        {
+            return false;
+        }
+
+        State = TrexState.Falling;
+        _dropVelocity = DROP_VELOCITY;
 
         return true;
     }

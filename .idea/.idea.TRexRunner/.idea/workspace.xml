@@ -7,9 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="Jump! sounds, animation, falling/jumping velocity, blink sprite object creation optimization">
+    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="Running animation">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TRexRunner/System/InputController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/System/InputController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +119,7 @@
       <workItem from="1724263974217" duration="6588000" />
       <workItem from="1724291565472" duration="97000" />
       <workItem from="1724292663023" duration="462000" />
-      <workItem from="1724422008206" duration="4305000" />
+      <workItem from="1724422008206" duration="6241000" />
     </task>
     <task id="LOCAL-00001" summary="Loading and drawing assets">
       <created>1724204011278</created>
@@ -162,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724426583940</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Running animation">
+      <created>1724427473276</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1724427473276</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,6 +199,7 @@
     <MESSAGE value="Trex placement, idle state background" />
     <MESSAGE value="working trex blinking animation" />
     <MESSAGE value="Jump! sounds, animation, falling/jumping velocity, blink sprite object creation optimization" />
-    <option name="LAST_COMMIT_MESSAGE" value="Jump! sounds, animation, falling/jumping velocity, blink sprite object creation optimization" />
+    <MESSAGE value="Running animation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Running animation" />
   </component>
 </project>
