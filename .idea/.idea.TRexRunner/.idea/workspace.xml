@@ -7,8 +7,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="Duck animation, drop from jump">
-      <change afterPath="$PROJECT_DIR$/TRexRunner/Entities/EntityManager.cs" afterDir="false" />
+    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="Basic EntityManager">
+      <change afterPath="$PROJECT_DIR$/TRexRunner/Entities/GroundManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TRexRunner/Entities/GroundTile.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" afterDir="false" />
     </list>
@@ -119,7 +120,7 @@
       <workItem from="1724263974217" duration="6588000" />
       <workItem from="1724291565472" duration="97000" />
       <workItem from="1724292663023" duration="462000" />
-      <workItem from="1724422008206" duration="7867000" />
+      <workItem from="1724422008206" duration="12370000" />
     </task>
     <task id="LOCAL-00001" summary="Loading and drawing assets">
       <created>1724204011278</created>
@@ -177,7 +178,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724429422534</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Basic EntityManager">
+      <created>1724431211559</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1724431211559</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,6 +216,7 @@
     <MESSAGE value="Jump! sounds, animation, falling/jumping velocity, blink sprite object creation optimization" />
     <MESSAGE value="Running animation" />
     <MESSAGE value="Duck animation, drop from jump" />
-    <option name="LAST_COMMIT_MESSAGE" value="Duck animation, drop from jump" />
+    <MESSAGE value="Basic EntityManager" />
+    <option name="LAST_COMMIT_MESSAGE" value="Basic EntityManager" />
   </component>
 </project>

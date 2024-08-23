@@ -35,6 +35,7 @@ public class TRexRunnerGame : Game
     private InputController _inputController;
 
     private EntityManager _entityManager;
+    private GroundManager _groundManager;
 
     public TRexRunnerGame()
     {
@@ -72,6 +73,8 @@ public class TRexRunnerGame : Game
 
         _entityManager.AddEntity(trex);
         _inputController = new InputController(trex);
+        _groundManager = new GroundManager(_spriteSheetTexture, _entityManager);
+        _groundManager.Initialize();
     }
 
     protected override void Update(GameTime gameTime)
