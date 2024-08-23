@@ -32,15 +32,16 @@ public class TRexRunnerGame : Game
 
     private Texture2D _spriteSheetTexture;
 
-    private Trex _trex;
-
     private InputController _inputController;
+
+    private EntityManager _entityManager;
 
     public TRexRunnerGame()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+        _entityManager = new EntityManager();
     }
 
     protected override void Initialize()
@@ -66,10 +67,11 @@ public class TRexRunnerGame : Game
 
         //offsetting the position here by it's height as we draw from the top left corner
         //if we didn't, the top left corner of the dino would be drawn there, quite low on the screen
-        _trex = new Trex(_spriteSheetTexture,
+        var trex = new Trex(_spriteSheetTexture,
             new Vector2(TREX_START_POS_X, TREX_START_POS_Y - Trex.TREX_DEFAULT_SPRITE_HEIGHT), _sfxButtonPress);
 
-        _inputController = new InputController(_trex);
+        _entityManager.AddEntity(trex);
+        _inputController = new InputController(trex);
     }
 
     protected override void Update(GameTime gameTime)
@@ -81,7 +83,7 @@ public class TRexRunnerGame : Game
         base.Update(gameTime);
         
         _inputController.ProcessControls(gameTime);
-        _trex.Update(gameTime);
+        _entityManager.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
@@ -89,7 +91,7 @@ public class TRexRunnerGame : Game
         GraphicsDevice.Clear(Color.White);
 
         _spriteBatch.Begin();
-        _trex.Draw(_spriteBatch, gameTime);
+        _entityManager.Draw(_spriteBatch, gameTime);
         _spriteBatch.End();
 
         base.Draw(gameTime);
