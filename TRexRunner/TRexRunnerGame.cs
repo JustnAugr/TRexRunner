@@ -37,12 +37,15 @@ public class TRexRunnerGame : Game
     private EntityManager _entityManager;
     private GroundManager _groundManager;
 
+    public GameState State { get; private set; }
+
     public TRexRunnerGame()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
         _entityManager = new EntityManager();
+        State = GameState.Initial;
     }
 
     protected override void Initialize()
@@ -70,10 +73,12 @@ public class TRexRunnerGame : Game
         //if we didn't, the top left corner of the dino would be drawn there, quite low on the screen
         var trex = new Trex(_spriteSheetTexture,
             new Vector2(TREX_START_POS_X, TREX_START_POS_Y - Trex.TREX_DEFAULT_SPRITE_HEIGHT), _sfxButtonPress);
+        trex.DrawOrder = 10; //ensure drawn on top of the ground
 
         _entityManager.AddEntity(trex);
         _inputController = new InputController(trex);
-        _groundManager = new GroundManager(_spriteSheetTexture, _entityManager);
+        _groundManager = new GroundManager(_spriteSheetTexture, _entityManager, trex);
+        _entityManager.AddEntity(_groundManager);
         _groundManager.Initialize();
     }
 
@@ -84,8 +89,9 @@ public class TRexRunnerGame : Game
             Exit();
 
         base.Update(gameTime);
-        
+
         _inputController.ProcessControls(gameTime);
+
         _entityManager.Update(gameTime);
     }
 
