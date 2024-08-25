@@ -72,4 +72,11 @@ public class EntityManager
     {
         _entitiesToRemove.AddRange(_entities);
     }
+
+    //generic method that returns all entities of specified type
+    //"where T : IGameEntity" serves to restrict type passed to method
+    public IEnumerable<T> GetEntitiesOfType<T>() where T : IGameEntity
+    {
+        return _entities.OfType<T>(); //extension method from LINQ that filters to matching types
+    }
 }
