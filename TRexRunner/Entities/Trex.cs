@@ -34,14 +34,19 @@ public class Trex : IGameEntity
     private const int TREX_DUCKING_SPRITE_ONE_POS_Y = 0;
     private const float DROP_VELOCITY = 600f;
 
+    private const int TREX_DEAD_SPRITE_POS_X = 1068;
+    private const int TREX_DEAD_SPRITE_POS_Y = 0;
+
     public const float START_SPEED = 280f;
     public const float MAX_SPEED = 900f;
 
-    public const float ACCELERATION = 5f; //pixels per second per second, 1pps^2 would have us increase from 280f to 281f in 1 second
+    public const float
+        ACCELERATION = 5f; //pixels per second per second, 1pps^2 would have us increase from 280f to 281f in 1 second
 
     private Sprite _idleBackgroundSprite;
     private Sprite _idleSprite;
     private Sprite _idleBlinkSprite;
+    private Sprite _deadSprite;
 
     private SoundEffect _jumpSound;
 
@@ -69,6 +74,7 @@ public class Trex : IGameEntity
 
     public Trex(Texture2D spriteSheet, Vector2 position, SoundEffect jumpSound)
     {
+        IsAlive = true;
         Position = position;
         //little idle sprite that has ground drawn with it
         _idleBackgroundSprite = new Sprite(spriteSheet, TREX_IDLE_BACKGROUND_SPRITE_POS_X,
@@ -111,12 +117,17 @@ public class Trex : IGameEntity
         //fake ending sprite, has to be *2 because it's timestamp in overall animation not duration
         _duckAnimation.AddFrame(_duckAnimation[0].Sprite, RUN_ANIMATION_FRAME_LENGTH * 2);
         _duckAnimation.Play();
+
+        _deadSprite = new Sprite(spriteSheet, TREX_DEAD_SPRITE_POS_X, TREX_DEAD_SPRITE_POS_Y, TREX_DEFAULT_SPRITE_WIDTH,
+            TREX_DEFAULT_SPRITE_HEIGHT);
     }
 
     public void Initialize()
     {
         Speed = START_SPEED;
-        State = TrexState.Running; //should be set to running on the end of the jump, but for good measure we make explicit here
+        State = TrexState
+            .Running; //should be set to running on the end of the jump, but for good measure we make explicit here
+        IsAlive = true;
     }
 
     public void Update(GameTime gameTime)
@@ -178,24 +189,28 @@ public class Trex : IGameEntity
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
-        if (State == TrexState.Idle)
+        if (!IsAlive)
         {
-            //if we're idle, draw the idle sprite in the background so that we can see the ground and blink
-            _idleBackgroundSprite.Draw(spriteBatch, Position);
-            _blinkAnimation.Draw(spriteBatch, Position);
+            _deadSprite.Draw(spriteBatch, Position);
         }
-        else if (State is TrexState.Jumping or TrexState.Falling)
-        {
-            _idleSprite.Draw(spriteBatch, Position);
-        }
-        else if (State == TrexState.Running)
-        {
-            _runAnimation.Draw(spriteBatch, Position);
-        }
-        else if (State == TrexState.Ducking)
-        {
-            _duckAnimation.Draw(spriteBatch, Position);
-        }
+        else
+            switch (State)
+            {
+                case TrexState.Idle:
+                    //if we're idle, draw the idle sprite in the background so that we can see the ground and blink
+                    _idleBackgroundSprite.Draw(spriteBatch, Position);
+                    _blinkAnimation.Draw(spriteBatch, Position);
+                    break;
+                case TrexState.Jumping or TrexState.Falling:
+                    _idleSprite.Draw(spriteBatch, Position);
+                    break;
+                case TrexState.Running:
+                    _runAnimation.Draw(spriteBatch, Position);
+                    break;
+                case TrexState.Ducking:
+                    _duckAnimation.Draw(spriteBatch, Position);
+                    break;
+            }
     }
 
     private void CreateBlinkAnimation()
@@ -279,5 +294,19 @@ public class Trex : IGameEntity
         //clients can sub to this event by adding a method with a matching signature -> which we'll do
         EventHandler handler = JumpComplete;
         handler?.Invoke(this, EventArgs.Empty);
+    }
+
+    public bool Die()
+    {
+        //can you die if you're already dead? too philosophical of a question...
+        if (!IsAlive)
+            return false;
+
+        //reset state to idle
+        State = TrexState.Idle;
+        Speed = 0;
+
+        IsAlive = false;
+        return true;
     }
 }

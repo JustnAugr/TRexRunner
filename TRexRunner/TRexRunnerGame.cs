@@ -44,6 +44,7 @@ public class TRexRunnerGame : Game
     private ScoreBoard _scoreBoard;
     private KeyboardState _previousKeyboardState;
     private ObstacleManager _obstacleManager;
+    private GameOverScreen _gameOverScreen;
 
     public GameState State { get; private set; }
 
@@ -86,21 +87,20 @@ public class TRexRunnerGame : Game
         _trex = new Trex(_spriteSheetTexture,
             new Vector2(TREX_START_POS_X, TREX_START_POS_Y - Trex.TREX_DEFAULT_SPRITE_HEIGHT), _sfxButtonPress);
         _trex.DrawOrder = 10; //ensure drawn on top of the ground
-        
         //subscribe to the JumpComplete event on the trex, trigger this method when the event fires
         _trex.JumpComplete += TrexOnJumpComplete;
 
         _scoreBoard = new ScoreBoard(_spriteSheetTexture, new Vector2(SCORE_BOARD_POS_X, SCORE_BOARD_POS_Y), _trex);
-
         _inputController = new InputController(_trex);
         _groundManager = new GroundManager(_spriteSheetTexture, _entityManager, _trex);
-
         _obstacleManager = new ObstacleManager(_entityManager, _trex, _scoreBoard, _spriteSheetTexture);
+        _gameOverScreen = new GameOverScreen(_spriteSheetTexture);
         
         _entityManager.AddEntity(_trex);
         _entityManager.AddEntity(_groundManager);
         _entityManager.AddEntity(_scoreBoard);
         _entityManager.AddEntity(_obstacleManager);
+        _entityManager.AddEntity(_gameOverScreen);
         
         _groundManager.Initialize();
     }
@@ -112,6 +112,10 @@ public class TRexRunnerGame : Game
             State = GameState.Playing;
             _trex.Initialize();
             _obstacleManager.IsEnabled = true;
+        }
+        else if (State == GameState.GameOver)
+        {
+            _gameOverScreen.IsEnabled = true;
         }
     }
 

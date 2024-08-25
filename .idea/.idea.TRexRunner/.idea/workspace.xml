@@ -7,8 +7,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="Cacti spawning">
-      <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" afterDir="false" />
+    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="Trex Acceleration">
+      <change afterPath="$PROJECT_DIR$/TRexRunner/Entities/GameOverScreen.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +37,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/657772264a38a88aa37b6b6dbc5cd8c4d16161d33e8d834887ecf824b5b4d7d7/Max.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/aef21ab35a6576cdcb99a56e6a8c84076d069f09ad1be52cfedaf49ee667855/Int32.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e4289d2e47fc0d3e77fd439d179c53645a3471dca5fd21eb74c1ccbf59c045/Random.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/justn/Code/RiderProjects/TRexRunner/TRexRunner/Entities/Trex.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -125,7 +127,7 @@
       <workItem from="1724422008206" duration="21087000" />
       <workItem from="1724456107886" duration="1447000" />
       <workItem from="1724545421259" duration="3174000" />
-      <workItem from="1724606042580" duration="5897000" />
+      <workItem from="1724606042580" duration="7829000" />
     </task>
     <task id="LOCAL-00001" summary="Loading and drawing assets">
       <created>1724204011278</created>
@@ -253,7 +255,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724612996851</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Trex Acceleration">
+      <created>1724613452769</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1724613452769</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,7 +303,8 @@
     <MESSAGE value="increase scoreboard as we run" />
     <MESSAGE value="ObstacleManager" />
     <MESSAGE value="Cacti spawning" />
-    <option name="LAST_COMMIT_MESSAGE" value="Cacti spawning" />
+    <MESSAGE value="Trex Acceleration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Trex Acceleration" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
