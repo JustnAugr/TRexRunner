@@ -25,7 +25,10 @@ public class CactusGroup : Obstacle
     private const int LARGE_CACTUS_TEXTURE_POS_Y = 0;
 
     public bool IsLarge { get; }
-    public override Rectangle CollisionBox { get; }
+
+    public override Rectangle CollisionBox => new((int)Math.Round(Position.X), (int)Math.Round(Position.Y),
+        Sprite.Width, Sprite.Height);
+
     public GroupSize Size { get; }
 
     public Sprite Sprite { get; }
@@ -41,7 +44,7 @@ public class CactusGroup : Obstacle
     private Sprite GenerateSprite(Texture2D spriteSheet)
     {
         Sprite sprite;
-        
+
         //in the sheet it's 6 cacti: the small group of 1 cacti, med group of 2 cacti, large group of 3 cacti
         //so we offset x to where each group starts
         //in the sheet it's 6 cacti: the small group of 1 cacti, med group of 2 cacti, large group of 3 cacti

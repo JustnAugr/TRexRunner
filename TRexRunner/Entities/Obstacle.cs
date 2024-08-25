@@ -24,6 +24,20 @@ public abstract class Obstacle : IGameEntity
         var posX = Position.X - _trex.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         Position = new Vector2(posX, Position.Y);
+
+        CheckCollisions();
+    }
+
+    private void CheckCollisions()
+    {
+        //check for collisions between this particular obstacle and the trex
+        var obstacleCollisionBox = CollisionBox;
+        var trexCollisionBox = _trex.CollisionBox;
+
+        if (obstacleCollisionBox.Intersects(trexCollisionBox))
+        {
+            _trex.Die();
+        }
     }
 
     public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);

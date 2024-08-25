@@ -23,7 +23,7 @@ public class TRexRunnerGame : Game
     public const int TREX_START_POS_Y = WINDOW_HEIGHT - 16;
     public const int TREX_START_POS_X = 1;
     private const float FADE_IN_ANIMATION_SPEED = 820f;
-    
+
     private const int SCORE_BOARD_POS_X = WINDOW_WIDTH - 130;
     private const int SCORE_BOARD_POS_Y = 10;
 
@@ -55,7 +55,8 @@ public class TRexRunnerGame : Game
         IsMouseVisible = true;
         _entityManager = new EntityManager();
         State = GameState.Initial;
-        _fadeInTexturePosX = Trex.TREX_DEFAULT_SPRITE_WIDTH; // we can start it right after the trex sprite ends, so everything to trex right is white
+        _fadeInTexturePosX =
+            Trex.TREX_DEFAULT_SPRITE_WIDTH; // we can start it right after the trex sprite ends, so everything to trex right is white
     }
 
     protected override void Initialize()
@@ -89,20 +90,29 @@ public class TRexRunnerGame : Game
         _trex.DrawOrder = 10; //ensure drawn on top of the ground
         //subscribe to the JumpComplete event on the trex, trigger this method when the event fires
         _trex.JumpComplete += TrexOnJumpComplete;
+        _trex.Died += TrexOnDied;
 
         _scoreBoard = new ScoreBoard(_spriteSheetTexture, new Vector2(SCORE_BOARD_POS_X, SCORE_BOARD_POS_Y), _trex);
         _inputController = new InputController(_trex);
         _groundManager = new GroundManager(_spriteSheetTexture, _entityManager, _trex);
         _obstacleManager = new ObstacleManager(_entityManager, _trex, _scoreBoard, _spriteSheetTexture);
-        _gameOverScreen = new GameOverScreen(_spriteSheetTexture);
-        
+        _gameOverScreen = new GameOverScreen(_spriteSheetTexture,
+            new Vector2(WINDOW_WIDTH / 2 - GameOverScreen.GAME_OVER_SPRITE_WIDTH/2, WINDOW_HEIGHT/2 - 30));
+
         _entityManager.AddEntity(_trex);
         _entityManager.AddEntity(_groundManager);
         _entityManager.AddEntity(_scoreBoard);
         _entityManager.AddEntity(_obstacleManager);
         _entityManager.AddEntity(_gameOverScreen);
-        
+
         _groundManager.Initialize();
+    }
+
+    private void TrexOnDied(object sender, EventArgs e)
+    {
+        State = GameState.GameOver;
+        _obstacleManager.IsEnabled = false;
+        _gameOverScreen.IsEnabled = true;
     }
 
     private void TrexOnJumpComplete(object sender, EventArgs e)
@@ -112,10 +122,6 @@ public class TRexRunnerGame : Game
             State = GameState.Playing;
             _trex.Initialize();
             _obstacleManager.IsEnabled = true;
-        }
-        else if (State == GameState.GameOver)
-        {
-            _gameOverScreen.IsEnabled = true;
         }
     }
 
@@ -128,7 +134,7 @@ public class TRexRunnerGame : Game
         base.Update(gameTime);
 
         KeyboardState keyboardState = Keyboard.GetState();
-        
+
         if (State == GameState.Playing)
             _inputController.ProcessControls(gameTime);
         else if (State == GameState.Transition)
@@ -138,15 +144,16 @@ public class TRexRunnerGame : Game
         else if (State == GameState.Initial)
         {
             var isStartKeyPressed = keyboardState.IsKeyDown(Keys.Up) || keyboardState.IsKeyDown(Keys.Space);
-            var wasStartKeyPressed = _previousKeyboardState.IsKeyDown(Keys.Up) || _previousKeyboardState.IsKeyDown(Keys.Space);
-            
+            var wasStartKeyPressed = _previousKeyboardState.IsKeyDown(Keys.Up) ||
+                                     _previousKeyboardState.IsKeyDown(Keys.Space);
+
             if (isStartKeyPressed && !wasStartKeyPressed)
             {
                 StartGame();
             }
         }
-        
-        
+
+
         _entityManager.Update(gameTime);
 
         _previousKeyboardState = keyboardState;

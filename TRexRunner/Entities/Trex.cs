@@ -55,6 +55,7 @@ public class Trex : IGameEntity
     private SpriteAnimation _duckAnimation;
 
     public event EventHandler JumpComplete;
+    public event EventHandler Died;
 
     public Vector2 Position { get; set; }
 
@@ -65,6 +66,10 @@ public class Trex : IGameEntity
     public float Speed { get; private set; }
 
     public int DrawOrder { get; set; }
+
+    public Rectangle CollisionBox =>
+        new((int)Math.Round(Position.X), (int)Math.Round(Position.Y), TREX_DEFAULT_SPRITE_WIDTH,
+            TREX_DEFAULT_SPRITE_HEIGHT);
 
     private Random _random;
 
@@ -284,7 +289,7 @@ public class Trex : IGameEntity
 
         State = TrexState.Falling;
         _dropVelocity = DROP_VELOCITY;
-
+        OnDied();
         return true;
     }
 
@@ -292,8 +297,7 @@ public class Trex : IGameEntity
     {
         //using an event to signal when we completed a jump and can have the ground start moving, for the game to really 'start'
         //clients can sub to this event by adding a method with a matching signature -> which we'll do
-        EventHandler handler = JumpComplete;
-        handler?.Invoke(this, EventArgs.Empty);
+        JumpComplete?.Invoke(this, EventArgs.Empty);
     }
 
     public bool Die()
@@ -307,6 +311,12 @@ public class Trex : IGameEntity
         Speed = 0;
 
         IsAlive = false;
+        OnDied();
         return true;
+    }
+
+    protected virtual void OnDied()
+    {
+        Died?.Invoke(this, EventArgs.Empty);
     }
 }
