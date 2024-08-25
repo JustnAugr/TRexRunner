@@ -15,7 +15,7 @@ public class ObstacleManager : IGameEntity
     private readonly ScoreBoard _scoreBoard;
     private readonly Random _random;
 
-    private double _lastSpawnScore;
+    private double _lastSpawnScore = -1.0;
     private double _currentTargetDistance;
 
     public bool IsEnabled { get; set; }
@@ -43,8 +43,8 @@ public class ObstacleManager : IGameEntity
             //rand here gives between 0.0 -> 1.0
             //convert to a num between MIN and MAX
             _currentTargetDistance = _random.NextDouble() * (MAX_OBSTACLE_DISTANCE - MIN_OBSTACLE_DISTANCE) + MIN_OBSTACLE_DISTANCE;
-            
-            //TODO: Create instance of obstacle, add to entity manager
+
+            SpawnRandomObstacle();
 
             _lastSpawnScore = _scoreBoard.Score;
         }
@@ -60,5 +60,10 @@ public class ObstacleManager : IGameEntity
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
+    }
+
+    private void SpawnRandomObstacle()
+    {
+        //todo: create instance of obstacle and add to entity manager
     }
 }
