@@ -35,7 +35,9 @@ public class Trex : IGameEntity
     private const float DROP_VELOCITY = 600f;
 
     public const float START_SPEED = 280f;
-    public const float MAX_SPEED = 900f; 
+    public const float MAX_SPEED = 900f;
+
+    public const float ACCELERATION = 5f; //pixels per second per second, 1pps^2 would have us increase from 280f to 281f in 1 second
 
     private Sprite _idleBackgroundSprite;
     private Sprite _idleSprite;
@@ -149,7 +151,7 @@ public class Trex : IGameEntity
                 Position = new Vector2(Position.X, _startPosY);
                 _verticalVelocity = 0;
                 State = TrexState.Running;
-                
+
                 //fire the event as we've completed our Jump
                 OnJumpComplete();
             }
@@ -162,6 +164,14 @@ public class Trex : IGameEntity
         {
             _duckAnimation.Update(gameTime);
         }
+
+        if (State != TrexState.Idle)
+        {
+            Speed += ACCELERATION * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+
+        if (Speed > MAX_SPEED)
+            Speed = MAX_SPEED;
 
         _dropVelocity = 0;
     }

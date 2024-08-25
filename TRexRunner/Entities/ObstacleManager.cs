@@ -12,6 +12,11 @@ public class ObstacleManager : IGameEntity
 
     //we're going to scale this value by the current speed to make sure we have a better min dist between obstacles
     private const int OBSTACLE_DISTANCE_SPEED_TOLERANCE = 5;
+    private const int LARGE_CACTUS_POS_Y = 80;
+    private const int SMALL_CACTUS_POS_Y = 94;
+
+    private const int OBSTACLE_DRAW_ORDER = 12;
+    private const int OBSTACLE_DESPAWN_POS_X = -200;
 
     private readonly EntityManager _entityManager;
     private readonly Trex _trex;
@@ -63,7 +68,7 @@ public class ObstacleManager : IGameEntity
         {
             //-200 to factor in width of sprite
             //it needs to disappear after its RIGHT EDGE has gone off screen, not its left edge
-            if (obstacle.Position.X < -200)
+            if (obstacle.Position.X < OBSTACLE_DESPAWN_POS_X)
                 _entityManager.RemoveEntity(obstacle);
         }
     }
@@ -83,8 +88,9 @@ public class ObstacleManager : IGameEntity
             (CactusGroup.GroupSize)_random.Next((int)CactusGroup.GroupSize.Small, (int)CactusGroup.GroupSize.Large + 1);
         var isLarge = _random.NextDouble() > 0.5;
         obstacle = new CactusGroup(_spriteSheet, isLarge, randomGroupSize, _trex,
-            new Vector2(TRexRunnerGame.WINDOW_WIDTH, isLarge ? 85 : 95));
+            new Vector2(TRexRunnerGame.WINDOW_WIDTH, isLarge ? LARGE_CACTUS_POS_Y : SMALL_CACTUS_POS_Y));
 
+        obstacle.DrawOrder = OBSTACLE_DRAW_ORDER;
         _entityManager.AddEntity(obstacle);
     }
 }
