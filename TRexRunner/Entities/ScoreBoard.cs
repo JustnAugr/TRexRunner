@@ -13,12 +13,21 @@ public class ScoreBoard : IGameEntity
     private const int TEXTURE_COORDS_NUMBER_HEIGHT = 13;
 
     private const byte NUMBER_DIGITS_TO_DRAW = 5;
+    private const int SCORE_MARGIN = 70;
+
+    private const int TEXTURE_COORDS_HI_X = 755;
+    private const int TEXTURE_COORDS_HI_Y = 0;
+    private const int TEXTURE_COORDS_HI_WIDTH = 20;
+    private const int TEXTURE_COORDS_HI_HEIGHT = 13;
+    private const int HI_TEXT_MARGIN = 28;
 
     private Texture2D _texture;
 
     public double Score { get; set; }
     public int DisplayScore => (int)Math.Floor(Score);
     public int HiScore { get; set; }
+
+    public bool HasHiScore => HiScore > 0;
 
     public int DrawOrder { get; set; } = 100; //high value for a UI element
 
@@ -36,11 +45,22 @@ public class ScoreBoard : IGameEntity
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
+        spriteBatch.Draw(_texture, new Vector2(Position.X - HI_TEXT_MARGIN, Position.Y),
+            new Rectangle(TEXTURE_COORDS_HI_X, TEXTURE_COORDS_HI_Y, TEXTURE_COORDS_HI_WIDTH, TEXTURE_COORDS_HI_HEIGHT), Color.White);
+
+        if (HasHiScore)
+            DrawScore(spriteBatch, HiScore, Position.X);
+
+        DrawScore(spriteBatch, DisplayScore, Position.X + SCORE_MARGIN);
+    }
+
+    private void DrawScore(SpriteBatch spriteBatch, int score, float startPosX)
+    {
         //DisplayScore: 498 -> 4 9 8
         //we need to split into individual digits and render them to the screen
-        int[] scoreDigits = SplitDigits(DisplayScore);
+        int[] scoreDigits = SplitDigits(score);
 
-        float posX = Position.X;
+        float posX = startPosX;
 
         foreach (var digit in scoreDigits)
         {

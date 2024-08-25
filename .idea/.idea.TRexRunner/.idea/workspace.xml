@@ -7,9 +7,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="Event handling on JumpComplete to fully start the game">
-      <change afterPath="$PROJECT_DIR$/TRexRunner/Entities/ScoreBoard.cs" afterDir="false" />
+    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/ScoreBoard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/ScoreBoard.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +63,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.24134079&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.11396648&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -122,7 +122,9 @@
       <workItem from="1724263974217" duration="6588000" />
       <workItem from="1724291565472" duration="97000" />
       <workItem from="1724292663023" duration="462000" />
-      <workItem from="1724422008206" duration="20992000" />
+      <workItem from="1724422008206" duration="21087000" />
+      <workItem from="1724456107886" duration="1447000" />
+      <workItem from="1724545421259" duration="823000" />
     </task>
     <task id="LOCAL-00001" summary="Loading and drawing assets">
       <created>1724204011278</created>
@@ -215,7 +217,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724444811578</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Drawing scoreboard">
+      <created>1724448325788</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1724448325788</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,6 +260,7 @@
     <MESSAGE value="Drawing and scrolling the ground with random generation" />
     <MESSAGE value="Gameplay start transition animation" />
     <MESSAGE value="Event handling on JumpComplete to fully start the game" />
-    <option name="LAST_COMMIT_MESSAGE" value="Event handling on JumpComplete to fully start the game" />
+    <MESSAGE value="Drawing scoreboard" />
+    <option name="LAST_COMMIT_MESSAGE" value="Drawing scoreboard" />
   </component>
 </project>

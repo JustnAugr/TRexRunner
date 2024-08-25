@@ -23,6 +23,9 @@ public class TRexRunnerGame : Game
     public const int TREX_START_POS_Y = WINDOW_HEIGHT - 16;
     public const int TREX_START_POS_X = 1;
     private const float FADE_IN_ANIMATION_SPEED = 820f;
+    
+    private const int SCORE_BOARD_POS_X = WINDOW_WIDTH - 130;
+    private const int SCORE_BOARD_POS_Y = 10;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -93,8 +96,9 @@ public class TRexRunnerGame : Game
         //subscribe to the JumpComplete event on the trex, trigger this method when the event fires
         _trex.JumpComplete += TrexOnJumpComplete;
 
-        _scoreBoard = new ScoreBoard(_spriteSheetTexture, new Vector2(WINDOW_WIDTH - 100, 10));
-        _scoreBoard.Score = 1; //to test...
+        _scoreBoard = new ScoreBoard(_spriteSheetTexture, new Vector2(SCORE_BOARD_POS_X, SCORE_BOARD_POS_Y));
+        _scoreBoard.Score = 12345; //to test...
+        _scoreBoard.HiScore = 99999;
         
         _inputController = new InputController(_trex);
         _groundManager = new GroundManager(_spriteSheetTexture, _entityManager, _trex);
