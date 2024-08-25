@@ -33,8 +33,9 @@ public class Trex : IGameEntity
     private const int TREX_DUCKING_SPRITE_ONE_POS_X = TREX_DEFAULT_SPRITE_POS_X + TREX_DEFAULT_SPRITE_WIDTH * 6;
     private const int TREX_DUCKING_SPRITE_ONE_POS_Y = 0;
     private const float DROP_VELOCITY = 600f;
-    
-    private const float START_SPEED = 240f;
+
+    public const float START_SPEED = 280f;
+    public const float MAX_SPEED = 900f; 
 
     private Sprite _idleBackgroundSprite;
     private Sprite _idleSprite;

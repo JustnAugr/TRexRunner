@@ -34,22 +34,16 @@ public class TRexRunnerGame : Game
     private SoundEffect _sfxHit;
     private SoundEffect _sfxScoreReached;
     private SoundEffect _sfxButtonPress;
-
     private Texture2D _spriteSheetTexture;
     private Texture2D _fadeInTexture;
-
     private float _fadeInTexturePosX;
-
     private InputController _inputController;
-
     private EntityManager _entityManager;
     private GroundManager _groundManager;
-
     private Trex _trex;
-
     private ScoreBoard _scoreBoard;
-
     private KeyboardState _previousKeyboardState;
+    private ObstacleManager _obstacleManager;
 
     public GameState State { get; private set; }
 
@@ -100,10 +94,13 @@ public class TRexRunnerGame : Game
 
         _inputController = new InputController(_trex);
         _groundManager = new GroundManager(_spriteSheetTexture, _entityManager, _trex);
+
+        _obstacleManager = new ObstacleManager(_entityManager, _trex, _scoreBoard, _spriteSheetTexture);
         
         _entityManager.AddEntity(_trex);
         _entityManager.AddEntity(_groundManager);
         _entityManager.AddEntity(_scoreBoard);
+        _entityManager.AddEntity(_obstacleManager);
         
         _groundManager.Initialize();
     }
@@ -114,6 +111,7 @@ public class TRexRunnerGame : Game
         {
             State = GameState.Playing;
             _trex.Initialize();
+            _obstacleManager.IsEnabled = true;
         }
     }
 

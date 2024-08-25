@@ -6,9 +6,12 @@ namespace TRexRunner.Entities;
 
 public class ObstacleManager : IGameEntity
 {
-    private const float MIN_SPAWN_DISTANCE = 20f;
-    private const int MIN_OBSTACLE_DISTANCE = 100; //in pixels
-    private const int MAX_OBSTACLE_DISTANCE = 500; //in pixels
+    private const float MIN_SPAWN_DISTANCE = 20f; //initial distance on game start
+    private const int MIN_OBSTACLE_DISTANCE = 10; //in points, not pixels
+    private const int MAX_OBSTACLE_DISTANCE = 50; //in points, not pixels
+
+    //we're going to scale this value by the current speed to make sure we have a better min dist between obstacles
+    private const int OBSTACLE_DISTANCE_SPEED_TOLERANCE = 5;
 
     private readonly EntityManager _entityManager;
     private readonly Trex _trex;
@@ -17,18 +20,19 @@ public class ObstacleManager : IGameEntity
 
     private double _lastSpawnScore = -1.0;
     private double _currentTargetDistance;
+    private Texture2D _spriteSheet;
 
     public bool IsEnabled { get; set; }
     public bool CanSpawnObstacles => IsEnabled && _scoreBoard.Score >= MIN_SPAWN_DISTANCE;
     public int DrawOrder { get; set; } = 0;
 
-
-    public ObstacleManager(EntityManager entityManager, Trex trex, ScoreBoard scoreBoard)
+    public ObstacleManager(EntityManager entityManager, Trex trex, ScoreBoard scoreBoard, Texture2D spriteSheet)
     {
         _entityManager = entityManager;
         _trex = trex;
         _scoreBoard = scoreBoard;
         _random = new Random();
+        _spriteSheet = spriteSheet;
     }
 
     public void Update(GameTime gameTime)
@@ -38,11 +42,17 @@ public class ObstacleManager : IGameEntity
 
         //if we can spawn, and if we haven't spawned, or if the distance between our last spawn and now is larger than the target dist
         //spawn another, generate a new target distance, set a new lastSpawnScore
-        if (CanSpawnObstacles && ( _lastSpawnScore <= 0 || (_scoreBoard.Score - _lastSpawnScore >= _currentTargetDistance)))
+        if (CanSpawnObstacles &&
+            (_lastSpawnScore <= 0 || (_scoreBoard.Score - _lastSpawnScore >= _currentTargetDistance)))
         {
             //rand here gives between 0.0 -> 1.0
             //convert to a num between MIN and MAX
-            _currentTargetDistance = _random.NextDouble() * (MAX_OBSTACLE_DISTANCE - MIN_OBSTACLE_DISTANCE) + MIN_OBSTACLE_DISTANCE;
+            _currentTargetDistance = _random.NextDouble() * (MAX_OBSTACLE_DISTANCE - MIN_OBSTACLE_DISTANCE) +
+                                     MIN_OBSTACLE_DISTANCE;
+            //add a bit more to the distance to factor in for how fast we're going
+            //essentially our speed as pct of the MAX_SPEED, times the tolerance
+            _currentTargetDistance += (_trex.Speed - Trex.START_SPEED) / (Trex.MAX_SPEED - Trex.START_SPEED) *
+                                      OBSTACLE_DISTANCE_SPEED_TOLERANCE;
 
             SpawnRandomObstacle();
 
@@ -65,5 +75,16 @@ public class ObstacleManager : IGameEntity
     private void SpawnRandomObstacle()
     {
         //todo: create instance of obstacle and add to entity manager
+
+        Obstacle obstacle;
+
+        //generate cactusgroup
+        var randomGroupSize =
+            (CactusGroup.GroupSize)_random.Next((int)CactusGroup.GroupSize.Small, (int)CactusGroup.GroupSize.Large + 1);
+        var isLarge = _random.NextDouble() > 0.5;
+        obstacle = new CactusGroup(_spriteSheet, isLarge, randomGroupSize, _trex,
+            new Vector2(TRexRunnerGame.WINDOW_WIDTH, isLarge ? 85 : 95));
+
+        _entityManager.AddEntity(obstacle);
     }
 }
