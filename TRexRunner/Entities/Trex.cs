@@ -6,7 +6,7 @@ using TRexRunner.Graphics;
 
 namespace TRexRunner.Entities;
 
-public class Trex : IGameEntity
+public class Trex : IGameEntity, ICollidable
 {
     private const float JUMP_START_VELOCITY = -480f; //pixels per second, negative bc up from down
     private const float GRAVITY = 1600f;
@@ -67,15 +67,24 @@ public class Trex : IGameEntity
 
     public int DrawOrder { get; set; }
 
-    public Rectangle CollisionBox =>
-        new((int)Math.Round(Position.X), (int)Math.Round(Position.Y), TREX_DEFAULT_SPRITE_WIDTH,
-            TREX_DEFAULT_SPRITE_HEIGHT);
+    public Rectangle CollisionBox
+    {
+        get
+        {
+            var rect = new Rectangle((int)Math.Round(Position.X), (int)Math.Round(Position.Y), TREX_DEFAULT_SPRITE_WIDTH,
+                TREX_DEFAULT_SPRITE_HEIGHT);
+            COLLISION_BOX_INSET = 3;
+            rect.Inflate(-COLLISION_BOX_INSET, -COLLISION_BOX_INSET);
+            return rect;
+        }
+    }
 
     private Random _random;
 
     private float _verticalVelocity;
     private float _startPosY;
     private float _dropVelocity;
+    private int COLLISION_BOX_INSET;
 
     public Trex(Texture2D spriteSheet, Vector2 position, SoundEffect jumpSound)
     {
@@ -289,7 +298,6 @@ public class Trex : IGameEntity
 
         State = TrexState.Falling;
         _dropVelocity = DROP_VELOCITY;
-        OnDied();
         return true;
     }
 

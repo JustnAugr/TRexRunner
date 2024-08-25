@@ -7,13 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="death...">
+    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="first path at collisons, but they're a bit big">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/CactusGroup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/CactusGroup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/GameOverScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/GameOverScreen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/Obstacle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/Obstacle.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +128,7 @@
       <workItem from="1724422008206" duration="21087000" />
       <workItem from="1724456107886" duration="1447000" />
       <workItem from="1724545421259" duration="3174000" />
-      <workItem from="1724606042580" duration="9346000" />
+      <workItem from="1724606042580" duration="10035000" />
     </task>
     <task id="LOCAL-00001" summary="Loading and drawing assets">
       <created>1724204011278</created>
@@ -273,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724615687924</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="first path at collisons, but they're a bit big">
+      <created>1724616955461</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1724616955461</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,49 +320,24 @@
     <MESSAGE value="Cacti spawning" />
     <MESSAGE value="Trex Acceleration" />
     <MESSAGE value="death..." />
-    <option name="LAST_COMMIT_MESSAGE" value="death..." />
+    <MESSAGE value="first path at collisons, but they're a bit big" />
+    <option name="LAST_COMMIT_MESSAGE" value="first path at collisons, but they're a bit big" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TRexRunner/Entities/GameOverScreen.cs</url>
-          <line>50</line>
-          <properties documentPath="C:\Users\justn\Code\RiderProjects\TRexRunner\TRexRunner\Entities\GameOverScreen.cs" initialLine="50" containingFunctionPresentation="method 'Draw'">
-            <startOffsets>
-              <option value="1756" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1797" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TRexRunner/Entities/GameOverScreen.cs</url>
-          <line>47</line>
-          <properties documentPath="C:\Users\justn\Code\RiderProjects\TRexRunner\TRexRunner\Entities\GameOverScreen.cs" initialLine="47" containingFunctionPresentation="method 'Draw'">
-            <startOffsets>
-              <option value="1711" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1726" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs</url>
-          <line>114</line>
-          <properties documentPath="C:\Users\justn\Code\RiderProjects\TRexRunner\TRexRunner\TRexRunnerGame.cs" initialLine="114" containingFunctionPresentation="method 'TrexOnDied'">
+          <line>112</line>
+          <properties documentPath="C:\Users\justn\Code\RiderProjects\TRexRunner\TRexRunner\TRexRunnerGame.cs" initialLine="112" containingFunctionPresentation="method 'TrexOnDied'">
             <startOffsets>
-              <option value="4792" />
+              <option value="4714" />
             </startOffsets>
             <endOffsets>
-              <option value="4825" />
+              <option value="4741" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="10" />
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -23,11 +23,21 @@ public class CactusGroup : Obstacle
     private const int LARGE_CACTUS_SPRITE_WIDTH = 25;
     private const int LARGE_CACTUS_TEXTURE_POS_X = 332;
     private const int LARGE_CACTUS_TEXTURE_POS_Y = 0;
+    private const int COLLISION_BOX_INSET = 3;
 
     public bool IsLarge { get; }
-
-    public override Rectangle CollisionBox => new((int)Math.Round(Position.X), (int)Math.Round(Position.Y),
-        Sprite.Width, Sprite.Height);
+    
+    public override Rectangle CollisionBox
+    {
+        get
+        {
+            //inflate by negative amount to evenly shrink on all 4 sides
+            var rect = new Rectangle((int)Math.Round(Position.X), (int)Math.Round(Position.Y),
+                Sprite.Width, Sprite.Height);
+            rect.Inflate(-COLLISION_BOX_INSET, -COLLISION_BOX_INSET);
+            return rect;
+        }
+    }
 
     public GroupSize Size { get; }
 
