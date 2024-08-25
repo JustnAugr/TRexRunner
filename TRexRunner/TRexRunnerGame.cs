@@ -96,10 +96,8 @@ public class TRexRunnerGame : Game
         //subscribe to the JumpComplete event on the trex, trigger this method when the event fires
         _trex.JumpComplete += TrexOnJumpComplete;
 
-        _scoreBoard = new ScoreBoard(_spriteSheetTexture, new Vector2(SCORE_BOARD_POS_X, SCORE_BOARD_POS_Y));
-        _scoreBoard.Score = 12345; //to test...
-        _scoreBoard.HiScore = 99999;
-        
+        _scoreBoard = new ScoreBoard(_spriteSheetTexture, new Vector2(SCORE_BOARD_POS_X, SCORE_BOARD_POS_Y), _trex);
+
         _inputController = new InputController(_trex);
         _groundManager = new GroundManager(_spriteSheetTexture, _entityManager, _trex);
         

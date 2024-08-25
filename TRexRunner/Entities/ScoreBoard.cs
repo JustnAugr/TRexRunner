@@ -20,6 +20,7 @@ public class ScoreBoard : IGameEntity
     private const int TEXTURE_COORDS_HI_WIDTH = 20;
     private const int TEXTURE_COORDS_HI_HEIGHT = 13;
     private const int HI_TEXT_MARGIN = 28;
+    private const float SCORE_INCREMENT_MULTIPLIER = .05f;
 
     private Texture2D _texture;
 
@@ -29,27 +30,34 @@ public class ScoreBoard : IGameEntity
 
     public bool HasHiScore => HiScore > 0;
 
+    private Trex _trex;
+
     public int DrawOrder { get; set; } = 100; //high value for a UI element
 
     public Vector2 Position { get; set; }
 
-    public ScoreBoard(Texture2D texture2D, Vector2 position)
+    public ScoreBoard(Texture2D texture2D, Vector2 position, Trex trex)
     {
         _texture = texture2D;
         Position = position;
+        _trex = trex;
     }
 
     public void Update(GameTime gameTime)
     {
+        Score += _trex.Speed * SCORE_INCREMENT_MULTIPLIER *
+                 gameTime.ElapsedGameTime.TotalSeconds; // score increases by 1/100 the speed per second
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
-        spriteBatch.Draw(_texture, new Vector2(Position.X - HI_TEXT_MARGIN, Position.Y),
-            new Rectangle(TEXTURE_COORDS_HI_X, TEXTURE_COORDS_HI_Y, TEXTURE_COORDS_HI_WIDTH, TEXTURE_COORDS_HI_HEIGHT), Color.White);
-
         if (HasHiScore)
+        {
+            spriteBatch.Draw(_texture, new Vector2(Position.X - HI_TEXT_MARGIN, Position.Y),
+                new Rectangle(TEXTURE_COORDS_HI_X, TEXTURE_COORDS_HI_Y, TEXTURE_COORDS_HI_WIDTH,
+                    TEXTURE_COORDS_HI_HEIGHT), Color.White);
             DrawScore(spriteBatch, HiScore, Position.X);
+        }
 
         DrawScore(spriteBatch, DisplayScore, Position.X + SCORE_MARGIN);
     }
