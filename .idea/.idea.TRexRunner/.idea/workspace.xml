@@ -7,10 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="first path at collisons, but they're a bit big">
+    <list default="true" id="46fe26b7-eaba-4d5b-a670-7b25ee081623" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TRexRunner/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/CactusGroup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/CactusGroup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/GameOverScreen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/GameOverScreen.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/ObstacleManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/ObstacleManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/Entities/Trex.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +40,6 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/657772264a38a88aa37b6b6dbc5cd8c4d16161d33e8d834887ecf824b5b4d7d7/Max.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/aef21ab35a6576cdcb99a56e6a8c84076d069f09ad1be52cfedaf49ee667855/Int32.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e4289d2e47fc0d3e77fd439d179c53645a3471dca5fd21eb74c1ccbf59c045/Random.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Users/justn/Code/RiderProjects/TRexRunner/TRexRunner/Entities/Trex.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -59,31 +60,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Project.TRexRunner.executor": "Run",
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "XThreadsFramesViewSplitterKey": "0.22916667",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "terminal",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Project.TRexRunner.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.22916667&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\justn\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\justn\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\justn\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\justn\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\justn\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\justn\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="generate constructor" />
@@ -128,7 +129,8 @@
       <workItem from="1724422008206" duration="21087000" />
       <workItem from="1724456107886" duration="1447000" />
       <workItem from="1724545421259" duration="3174000" />
-      <workItem from="1724606042580" duration="10035000" />
+      <workItem from="1724606042580" duration="10202000" />
+      <workItem from="1724617682240" duration="1412000" />
     </task>
     <task id="LOCAL-00001" summary="Loading and drawing assets">
       <created>1724204011278</created>
@@ -277,7 +279,14 @@
       <option name="project" value="LOCAL" />
       <updated>1724616955461</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Collisions with some inset">
+      <created>1724617651630</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1724617651630</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,25 +330,7 @@
     <MESSAGE value="Trex Acceleration" />
     <MESSAGE value="death..." />
     <MESSAGE value="first path at collisons, but they're a bit big" />
-    <option name="LAST_COMMIT_MESSAGE" value="first path at collisons, but they're a bit big" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/TRexRunner/TRexRunnerGame.cs</url>
-          <line>112</line>
-          <properties documentPath="C:\Users\justn\Code\RiderProjects\TRexRunner\TRexRunner\TRexRunnerGame.cs" initialLine="112" containingFunctionPresentation="method 'TrexOnDied'">
-            <startOffsets>
-              <option value="4714" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4741" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Collisions with some inset" />
+    <option name="LAST_COMMIT_MESSAGE" value="Collisions with some inset" />
   </component>
 </project>

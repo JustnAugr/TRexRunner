@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using TRexRunner.Graphics;
 
 namespace TRexRunner.Entities;
@@ -19,6 +20,7 @@ public class GameOverScreen : IGameEntity
     private Sprite _textSprite;
     private Sprite _buttonSprite;
     private Vector2 _position;
+    private TRexRunnerGame _game;
 
     public int DrawOrder { get; set; } = 100;
     public bool IsEnabled { get; set; }
@@ -27,7 +29,10 @@ public class GameOverScreen : IGameEntity
                                      new Vector2(GAME_OVER_SPRITE_WIDTH / 2 - BUTTON_SPRITE_WIDTH / 2,
                                          GAME_OVER_SPRITE_HEIGHT + 20);
 
-    public GameOverScreen(Texture2D spriteSheet, Vector2 position)
+    public Rectangle ButtonBounds => //this constructor takes two points, top left and bottom right
+        new(ButtonPosition.ToPoint(), new Point(BUTTON_SPRITE_WIDTH, BUTTON_SPRITE_HEIGHT));
+
+    public GameOverScreen(Texture2D spriteSheet, Vector2 position, TRexRunnerGame game)
     {
         _spriteSheet = spriteSheet;
         _textSprite = new Sprite(_spriteSheet, GAME_OVER_TEXTURE_POS_X, GAME_OVER_TEXTURE_POS_Y, GAME_OVER_SPRITE_WIDTH,
@@ -35,12 +40,23 @@ public class GameOverScreen : IGameEntity
         _buttonSprite = new Sprite(_spriteSheet, BUTTON_TEXTURE_POS_X, BUTTON_TEXTURE_POS_Y, BUTTON_SPRITE_WIDTH,
             BUTTON_SPRITE_HEIGHT);
         _position = position;
+        _game = game;
     }
 
     public void Update(GameTime gameTime)
     {
         if (!IsEnabled)
             return;
+
+        var mouseState = Mouse.GetState();
+        var kbState = Keyboard.GetState();
+
+        if ((mouseState.LeftButton == ButtonState.Pressed && ButtonBounds.Contains(mouseState.Position)) ||
+            kbState.IsKeyDown(Keys.Enter))
+        {
+            //I'd prefer to do this via an event, I think it's cleaner than passing a reference to the Game
+            _game.Replay();
+        }
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)

@@ -142,6 +142,7 @@ public class Trex : IGameEntity, ICollidable
         State = TrexState
             .Running; //should be set to running on the end of the jump, but for good measure we make explicit here
         IsAlive = true;
+        Position = new Vector2(Position.X, _startPosY);
     }
 
     public void Update(GameTime gameTime)

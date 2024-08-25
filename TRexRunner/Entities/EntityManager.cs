@@ -19,6 +19,12 @@ public class EntityManager
     {
         foreach (var entity in _entities)
         {
+            //if we're about to remove this entity in this tick, don't process updates for it
+            //this helps prevents issues with the death event where we die, but the obstacles we are about to remove still get Updated()
+            //right before being deleted, double playing the death sound
+            if (_entitiesToRemove.Contains(entity))
+                continue;
+
             entity.Update(gameTime);
         }
 

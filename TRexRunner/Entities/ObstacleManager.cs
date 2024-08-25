@@ -93,4 +93,16 @@ public class ObstacleManager : IGameEntity
         obstacle.DrawOrder = OBSTACLE_DRAW_ORDER;
         _entityManager.AddEntity(obstacle);
     }
+
+    public void Reset()
+    {
+        foreach (var obstacle in _entityManager.GetEntitiesOfType<Obstacle>())
+        {
+            _entityManager.RemoveEntity(obstacle);
+        }
+
+        //to make sure on replay we don't rack up free points by having no obstacles for ages
+        _currentTargetDistance = 0;
+        _lastSpawnScore = -1;
+    }
 }
