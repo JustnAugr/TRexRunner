@@ -73,7 +73,7 @@ public class Trex : IGameEntity, ICollidable
         {
             var rect = new Rectangle((int)Math.Round(Position.X), (int)Math.Round(Position.Y), TREX_DEFAULT_SPRITE_WIDTH,
                 TREX_DEFAULT_SPRITE_HEIGHT);
-            COLLISION_BOX_INSET = 3;
+            COLLISION_BOX_INSET = 10;
             rect.Inflate(-COLLISION_BOX_INSET, -COLLISION_BOX_INSET);
             return rect;
         }
