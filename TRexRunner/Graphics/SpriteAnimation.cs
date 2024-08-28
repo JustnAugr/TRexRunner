@@ -104,4 +104,24 @@ public class SpriteAnimation
         Stop();
         _frames.Clear();
     }
+
+    public static SpriteAnimation CreateSimpleAnimation(Texture2D texture, Point startPos, int width, int height,
+        Point offset, int frameCount, float frameLength)
+    {
+        if (texture == null)
+            throw new ArgumentNullException(nameof(texture), "Texture can't be null!");
+
+        var spriteAnimation = new SpriteAnimation();
+        for (int i = 0; i < frameCount; i++)
+        {
+            var sprite = new Sprite(texture, startPos.X + i * offset.X, startPos.Y + i * offset.Y, width, height);
+            spriteAnimation.AddFrame(sprite, frameLength * i);
+
+            //on last iteration, add our dummy fake frame
+            if (i == frameCount - 1)
+                spriteAnimation.AddFrame(sprite, frameLength * i + 1);
+        }
+
+        return spriteAnimation;
+    }
 }
