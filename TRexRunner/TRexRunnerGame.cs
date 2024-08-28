@@ -200,6 +200,7 @@ public class TRexRunnerGame : Game
         _obstacleManager.IsEnabled = true;
         _gameOverScreen.IsEnabled = false;
         _scoreBoard.Score = 0;
+        _groundManager.Initialize();
         
         return true;
     }

@@ -81,6 +81,12 @@ public class GroundManager : IGameEntity
 
     public void Initialize()
     {
+        //mainly for replaying the game after gameover, get rid of existing ground and reset
+        foreach (var tile in _groundTiles)
+        {
+            _entityManager.RemoveEntity(tile);
+        }
+        
         _groundTiles.Clear();
         var groundTile = CreateRegularTile(0);
         _groundTiles.Add(groundTile);
