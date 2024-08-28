@@ -53,13 +53,15 @@ public class FlyingDino : Obstacle
         //move the sprite(Animation), check for collisions
         base.Update(gameTime);
 
-        //make the trex a little faster since it's moving as well, unlike the cacti
-        //we already moved it in line with the trex in the base class, so now do more!
-        Position = new Vector2(Position.X - SPEED_PPS * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
-
         //also need to make sure we're playing the animation until game stops
         if (_trex.IsAlive)
+        {
             _animation.Update(gameTime);
+            
+            //make the trex a little faster since it's moving as well, unlike the cacti
+            //we already moved it in line with the trex in the base class, so now do more!
+            Position = new Vector2(Position.X - SPEED_PPS * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
+        }
     }
 
     public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
