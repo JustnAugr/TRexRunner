@@ -9,7 +9,7 @@ public abstract class Obstacle : IGameEntity, ICollidable
 
     public abstract Rectangle CollisionBox { get; }
     public int DrawOrder { get; set; }
-    public Vector2 Position { get; private set; }
+    public Vector2 Position { get; set; }
 
     //protected instead of public since this is an abstract class
     protected Obstacle(Trex trex, Vector2 position)
@@ -18,7 +18,7 @@ public abstract class Obstacle : IGameEntity, ICollidable
         Position = position;
     }
 
-    public void Update(GameTime gameTime)
+    public virtual void Update(GameTime gameTime) //virtual so we can override
     {
         //should move in line with Trex speed per second
         var posX = Position.X - _trex.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;

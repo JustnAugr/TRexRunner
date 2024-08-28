@@ -43,6 +43,8 @@ public class Trex : IGameEntity, ICollidable
     public const float
         ACCELERATION = 5f; //pixels per second per second, 1pps^2 would have us increase from 280f to 281f in 1 second
 
+    private const int DUCK_COLLISION_REDUCTION = 20;
+
     private Sprite _idleBackgroundSprite;
     private Sprite _idleSprite;
     private Sprite _idleBlinkSprite;
@@ -71,10 +73,19 @@ public class Trex : IGameEntity, ICollidable
     {
         get
         {
-            var rect = new Rectangle((int)Math.Round(Position.X), (int)Math.Round(Position.Y), TREX_DEFAULT_SPRITE_WIDTH,
+            var rect = new Rectangle((int)Math.Round(Position.X), (int)Math.Round(Position.Y),
+                TREX_DEFAULT_SPRITE_WIDTH,
                 TREX_DEFAULT_SPRITE_HEIGHT);
             COLLISION_BOX_INSET = 10;
             rect.Inflate(-COLLISION_BOX_INSET, -COLLISION_BOX_INSET);
+            
+            //I'd prefer to pass in the proper height of the sprite into the new Rectangle call tbh
+            if (State == TrexState.Ducking)
+            {
+                rect.Y += DUCK_COLLISION_REDUCTION; //move it down by x pixels
+                rect.Height -= DUCK_COLLISION_REDUCTION;
+            }
+
             return rect;
         }
     }
