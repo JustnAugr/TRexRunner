@@ -45,6 +45,7 @@ public class TRexRunnerGame : Game
     private KeyboardState _previousKeyboardState;
     private ObstacleManager _obstacleManager;
     private GameOverScreen _gameOverScreen;
+    private SkyManager _skyManager;
 
     public GameState State { get; private set; }
 
@@ -92,18 +93,21 @@ public class TRexRunnerGame : Game
         _trex.JumpComplete += TrexOnJumpComplete;
         _trex.Died += TrexOnDied;
 
-        _scoreBoard = new ScoreBoard(_spriteSheetTexture, new Vector2(SCORE_BOARD_POS_X, SCORE_BOARD_POS_Y), _trex, _sfxScoreReached);
+        _scoreBoard = new ScoreBoard(_spriteSheetTexture, new Vector2(SCORE_BOARD_POS_X, SCORE_BOARD_POS_Y), _trex,
+            _sfxScoreReached);
         _inputController = new InputController(_trex);
         _groundManager = new GroundManager(_spriteSheetTexture, _entityManager, _trex);
         _obstacleManager = new ObstacleManager(_entityManager, _trex, _scoreBoard, _spriteSheetTexture);
         _gameOverScreen = new GameOverScreen(_spriteSheetTexture,
             new Vector2(WINDOW_WIDTH / 2 - GameOverScreen.GAME_OVER_SPRITE_WIDTH / 2, WINDOW_HEIGHT / 2 - 30), this);
+        _skyManager = new SkyManager(_trex, _spriteSheetTexture, _entityManager, _scoreBoard);
 
         _entityManager.AddEntity(_trex);
         _entityManager.AddEntity(_groundManager);
         _entityManager.AddEntity(_scoreBoard);
         _entityManager.AddEntity(_obstacleManager);
         _entityManager.AddEntity(_gameOverScreen);
+        _entityManager.AddEntity(_skyManager);
 
         _groundManager.Initialize();
     }
@@ -201,7 +205,7 @@ public class TRexRunnerGame : Game
         _gameOverScreen.IsEnabled = false;
         _scoreBoard.Score = 0;
         _groundManager.Initialize();
-        
+
         return true;
     }
 }
