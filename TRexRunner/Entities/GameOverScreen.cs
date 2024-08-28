@@ -52,7 +52,7 @@ public class GameOverScreen : IGameEntity
         var kbState = Keyboard.GetState();
 
         if ((mouseState.LeftButton == ButtonState.Pressed && ButtonBounds.Contains(mouseState.Position)) ||
-            kbState.IsKeyDown(Keys.Enter))
+            kbState.IsKeyDown(Keys.Enter) || kbState.IsKeyDown(Keys.Up))
         {
             //I'd prefer to do this via an event, I think it's cleaner than passing a reference to the Game
             _game.Replay();
