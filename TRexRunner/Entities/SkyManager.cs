@@ -25,7 +25,7 @@ public class SkyManager : IGameEntity, IDayNightCycle
 
     private const int MOON_POS_Y = 20;
 
-    private const int NIGHT_TIME_SCORE = 700; 
+    private const int NIGHT_TIME_SCORE = 700;
     private const int NIGHT_TIME_DURATION_SCORE = 250;
 
     private readonly Trex _trex;
@@ -46,6 +46,11 @@ public class SkyManager : IGameEntity, IDayNightCycle
 
     public int DrawOrder { get; set; } = 0;
     public int NightCount { get; private set; }
+
+    public Color ClearColor =>
+        new(_normalizedScreenColor, _normalizedScreenColor,
+            _normalizedScreenColor); //1,1,1 would be rgb255,255,255 of white
+
     public bool IsNight => _normalizedScreenColor < 0.5f;
 
     public SkyManager(Trex trex, Texture2D spriteSheet, EntityManager entityManager, ScoreBoard scoreBoard)
@@ -85,12 +90,20 @@ public class SkyManager : IGameEntity, IDayNightCycle
         //change to night time
         //this relies on the rounding of the division to give us different values
         //698/700 and 699/700 will be 0, but once we hit 700 - then we'll transition
-        if (_previousScore / NIGHT_TIME_SCORE != _scoreBoard.DisplayScore / NIGHT_TIME_SCORE)
+        //first two conditions are for handling when we restart after a gameover
+        if (_previousScore != 0 && _previousScore < _scoreBoard.DisplayScore &&
+            _previousScore / NIGHT_TIME_SCORE != _scoreBoard.DisplayScore / NIGHT_TIME_SCORE)
         {
             TransitionToNightTime();
         }
 
         if (IsNight && _scoreBoard.DisplayScore - _nightTimeStartScore >= NIGHT_TIME_DURATION_SCORE)
+        {
+            TransitionToDayTime();
+        }
+        
+        //if were restarting after a gameover, transition back to day on restart
+        if (_scoreBoard.DisplayScore < NIGHT_TIME_SCORE && (IsNight || _isTransitioningToNight))
         {
             TransitionToDayTime();
         }
@@ -131,20 +144,21 @@ public class SkyManager : IGameEntity, IDayNightCycle
         _isTransitioningToDay = false;
         NightCount++;
 
-        _normalizedScreenColor = 0f;
+        //make sure it starts at day
+        _normalizedScreenColor = 1f;
         return true;
     }
 
     private bool TransitionToDayTime()
     {
-        if (!IsNight)
+        if (!IsNight || _isTransitioningToDay)
             return false;
 
         _isTransitioningToNight = false;
         _isTransitioningToDay = true;
 
-        _normalizedScreenColor = 1f;
-
+        //make sure it starts at night
+        _normalizedScreenColor = 0f;
         return true;
     }
 

@@ -166,7 +166,10 @@ public class TRexRunnerGame : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.White);
+        //if skymanager isn't null, use its clearcolor which might be white or black
+        //depending on our score and if its night
+        GraphicsDevice.Clear(_skyManager?.ClearColor ?? Color.White);
+
         _spriteBatch.Begin();
 
         _entityManager.Draw(_spriteBatch, gameTime);
