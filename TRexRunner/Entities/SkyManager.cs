@@ -27,13 +27,15 @@ public class SkyManager : IGameEntity, IDayNightCycle
 
     private const int NIGHT_TIME_SCORE = 700;
     private const int NIGHT_TIME_DURATION_SCORE = 250;
+    private const float EPSILON = 0.01f;
 
     private readonly Trex _trex;
     private readonly Texture2D _spriteSheet;
     private readonly Texture2D _invertedSpriteSheet;
     private readonly EntityManager _entityManager;
     private readonly ScoreBoard _scoreBoard;
-    private Random _random;
+    private readonly Texture2D _overlay;
+    private readonly Random _random;
     private Moon _moon;
 
     private int _targetCloudDistance;
@@ -45,10 +47,10 @@ public class SkyManager : IGameEntity, IDayNightCycle
     private bool _isTransitioningToNight;
     private bool _isTransitioningToDay;
 
-    private Color[] _textureData;
-    private Color[] _invertedTextureData;
+    private readonly Color[] _textureData;
+    private readonly Color[] _invertedTextureData;
 
-    public int DrawOrder { get; set; } = 0;
+    public int DrawOrder { get; set; } = int.MaxValue; //ontop for our gray overlay
     public int NightCount { get; private set; }
 
     public Color ClearColor =>
@@ -56,6 +58,12 @@ public class SkyManager : IGameEntity, IDayNightCycle
             _normalizedScreenColor); //1,1,1 would be rgb255,255,255 of white
 
     public bool IsNight => _normalizedScreenColor < 0.5f;
+
+    //we're going to have an overlay texture that starts to appear 25% of the way into our transition and peaks at the halfway
+    //point of our transition
+    //this calculates the transparency of that so that the transparency is 1 when we're halfway, but only starts once we're at .25
+    private float OverlayVisibility =>
+        MathHelper.Clamp((0.25f - MathHelper.Distance(0.5f, _normalizedScreenColor)) / 0.25f, 0, 1);
 
     public SkyManager(Trex trex, Texture2D spriteSheet, Texture2D invertedSpriteSheet, EntityManager entityManager,
         ScoreBoard scoreBoard)
@@ -65,6 +73,11 @@ public class SkyManager : IGameEntity, IDayNightCycle
         _invertedSpriteSheet = invertedSpriteSheet;
         _entityManager = entityManager;
         _scoreBoard = scoreBoard;
+
+        _overlay = new Texture2D(spriteSheet.GraphicsDevice, 1, 1);
+        var overlayData = new[] { Color.Gray };
+        _overlay.SetData(overlayData);
+
         _random = new Random();
 
         //store color data for regular texture data and inverted texture data
@@ -225,5 +238,12 @@ public class SkyManager : IGameEntity, IDayNightCycle
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
+        //the multiplication should overload just the ALPHA channel for transparency
+        //aka when OverlayVisibility == 1 then we draw the gray overlay rectangle bc the alpha will be 255
+        
+        //the if check avoids pointless draw calls (aka score 0-699, 951-1399, etc)
+        if (OverlayVisibility > EPSILON)
+            spriteBatch.Draw(_overlay, new Rectangle(0, 0, TRexRunnerGame.WINDOW_WIDTH, TRexRunnerGame.WINDOW_HEIGHT),
+            Color.White * OverlayVisibility);
     }
 }
