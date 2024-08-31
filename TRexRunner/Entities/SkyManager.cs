@@ -5,10 +5,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TRexRunner.Entities;
 
-public class SkyManager : IGameEntity
+public class SkyManager : IGameEntity, IDayNightCycle
 {
+    private const float TRANSITION_DURATION = 2f; //seconds
+
     private const int CLOUD_DRAW_ORDER = -1;
-    private const int STAR_DRAW_ORDER = -2;
+    private const int STAR_DRAW_ORDER = -3;
+    private const int MOON_DRAW_ORDER = -2;
 
     private const int CLOUD_MIN_POS_Y = 20;
     private const int CLOUD_MAX_POS_Y = 70;
@@ -20,16 +23,30 @@ public class SkyManager : IGameEntity
     private const int STAR_MIN_DISTANCE = 120;
     private const int STAR_MAX_DISTANCE = 380;
 
+    private const int MOON_POS_Y = 20;
+
+    private const int NIGHT_TIME_SCORE = 700; 
+    private const int NIGHT_TIME_DURATION_SCORE = 250;
+
     private readonly Trex _trex;
     private readonly Texture2D _spriteSheet;
     private readonly EntityManager _entityManager;
     private readonly ScoreBoard _scoreBoard;
     private Random _random;
+    private Moon _moon;
 
     private int _targetCloudDistance;
     private int _targetStarDistance;
 
+    private float _normalizedScreenColor = 1f; //1 for day, 0 for night
+    private int _previousScore;
+    private int _nightTimeStartScore;
+    private bool _isTransitioningToNight;
+    private bool _isTransitioningToDay;
+
     public int DrawOrder { get; set; } = 0;
+    public int NightCount { get; private set; }
+    public bool IsNight => _normalizedScreenColor < 0.5f;
 
     public SkyManager(Trex trex, Texture2D spriteSheet, EntityManager entityManager, ScoreBoard scoreBoard)
     {
@@ -42,15 +59,93 @@ public class SkyManager : IGameEntity
 
     public void Update(GameTime gameTime)
     {
+        if (_moon == null)
+        {
+            _moon = new Moon(this, _spriteSheet, _trex, new Vector2(TRexRunnerGame.WINDOW_WIDTH, MOON_POS_Y));
+            _moon.DrawOrder = MOON_DRAW_ORDER;
+            _entityManager.AddEntity(_moon);
+        }
+
         HandleCloudSpawning();
         HandleStarSpawning();
 
         //remove skyObjects that are far gone
         foreach (var skyObject in _entityManager.GetEntitiesOfType<SkyObject>())
         {
-            if (skyObject.Position.X <= -200) //aka no longer visible off the screen to the left
-                _entityManager.RemoveEntity(skyObject);
+            if (skyObject.Position.X <= -100) //aka no longer visible off the screen to the left
+            {
+                //moon never gets removed, just resent back to the right hand side to scroll again
+                if (skyObject is Moon moon)
+                    moon.Position = new Vector2(TRexRunnerGame.WINDOW_WIDTH, MOON_POS_Y);
+                else
+                    _entityManager.RemoveEntity(skyObject);
+            }
         }
+
+        //change to night time
+        //this relies on the rounding of the division to give us different values
+        //698/700 and 699/700 will be 0, but once we hit 700 - then we'll transition
+        if (_previousScore / NIGHT_TIME_SCORE != _scoreBoard.DisplayScore / NIGHT_TIME_SCORE)
+        {
+            TransitionToNightTime();
+        }
+
+        if (IsNight && _scoreBoard.DisplayScore - _nightTimeStartScore >= NIGHT_TIME_DURATION_SCORE)
+        {
+            TransitionToDayTime();
+        }
+
+        UpdateTransition(gameTime);
+
+        _previousScore = _scoreBoard.DisplayScore;
+    }
+
+    private void UpdateTransition(GameTime gameTime)
+    {
+        if (_isTransitioningToNight)
+        {
+            //should take 2 seconds to go from 1 to 0 and become nighttime
+            _normalizedScreenColor -= (float)gameTime.ElapsedGameTime.TotalSeconds / TRANSITION_DURATION;
+
+            if (_normalizedScreenColor < 0)
+                _normalizedScreenColor = 0;
+        }
+        else if (_isTransitioningToDay)
+        {
+            //should take 2 seconds to go from 0 to 1 and become day time
+            _normalizedScreenColor += (float)gameTime.ElapsedGameTime.TotalSeconds / TRANSITION_DURATION;
+
+            if (_normalizedScreenColor > 1)
+                _normalizedScreenColor = 1;
+        }
+    }
+
+    private bool TransitionToNightTime()
+    {
+        if (IsNight || _isTransitioningToNight)
+            return false;
+
+        _nightTimeStartScore = _scoreBoard.DisplayScore;
+
+        _isTransitioningToNight = true;
+        _isTransitioningToDay = false;
+        NightCount++;
+
+        _normalizedScreenColor = 0f;
+        return true;
+    }
+
+    private bool TransitionToDayTime()
+    {
+        if (!IsNight)
+            return false;
+
+        _isTransitioningToNight = false;
+        _isTransitioningToDay = true;
+
+        _normalizedScreenColor = 1f;
+
+        return true;
     }
 
     private void HandleCloudSpawning()
@@ -77,7 +172,7 @@ public class SkyManager : IGameEntity
             _targetStarDistance = _random.Next(STAR_MIN_DISTANCE, STAR_MAX_DISTANCE + 1);
 
             int posY = _random.Next(STAR_MIN_POS_Y, STAR_MAX_POS_Y + 1);
-            var star = new Star(_spriteSheet, _trex, new Vector2(TRexRunnerGame.WINDOW_WIDTH, posY));
+            var star = new Star(this, _spriteSheet, _trex, new Vector2(TRexRunnerGame.WINDOW_WIDTH, posY));
             star.DrawOrder = STAR_DRAW_ORDER;
 
             _entityManager.AddEntity(star);
