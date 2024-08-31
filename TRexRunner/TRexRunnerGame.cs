@@ -1,5 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -28,6 +33,7 @@ public class TRexRunnerGame : Game
 
     private const int SCORE_BOARD_POS_X = WINDOW_WIDTH - 130;
     private const int SCORE_BOARD_POS_Y = 10;
+    private const string SAVE_FILE_NAME = "Save.dat";
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -49,6 +55,7 @@ public class TRexRunnerGame : Game
     private ObstacleManager _obstacleManager;
     private GameOverScreen _gameOverScreen;
     private SkyManager _skyManager;
+    private DateTime _highscoreDate;
 
     public GameState State { get; private set; }
 
@@ -115,6 +122,8 @@ public class TRexRunnerGame : Game
         _entityManager.AddEntity(_skyManager);
 
         _groundManager.Initialize();
+
+        LoadGame();
     }
 
     private void TrexOnDied(object sender, EventArgs e)
@@ -128,6 +137,9 @@ public class TRexRunnerGame : Game
         {
             Debug.WriteLine("New highscore set!: " + _scoreBoard.DisplayScore);
             _scoreBoard.HiScore = _scoreBoard.DisplayScore;
+            _highscoreDate = DateTime.Now;
+            
+            SaveGame();
         }
     }
 
@@ -224,5 +236,52 @@ public class TRexRunnerGame : Game
         _groundManager.Initialize();
 
         return true;
+    }
+
+    private void SaveGame()
+    {
+        var saveState = new SaveState()
+        {
+            HighScore = _scoreBoard.HiScore,
+            HighScoreDate = _highscoreDate
+        };
+
+        try
+        {
+            //just class object to json to binary to base64 string to file
+            using var fileStream = new FileStream(SAVE_FILE_NAME, FileMode.OpenOrCreate);
+            var writer = new BinaryWriter(fileStream);
+            var plainTextBytes = JsonSerializer.SerializeToUtf8Bytes(saveState);
+            writer.Write(Convert.ToBase64String(plainTextBytes));
+            writer.Flush();
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine("Unable to save game, error: " + e.Message);
+        }
+    }
+
+    private void LoadGame()
+    {
+        try
+        {
+            //read the string, convert from base64 to bytes, deserialize the bytes to an object
+            using var fileStream = new FileStream(SAVE_FILE_NAME, FileMode.OpenOrCreate);
+            var reader = new BinaryReader(fileStream);
+            var json = Convert.FromBase64String(reader.ReadString());
+            var state = JsonSerializer.Deserialize<SaveState>(json);
+            reader.Close();
+
+            //aaaand set the highscore
+            if (state != null && _scoreBoard != null)
+            {
+                _scoreBoard.HiScore = state.HighScore;
+                _highscoreDate = state.HighScoreDate;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine("Unable to load save game, error: " + e.Message);
+        }
     }
 }
