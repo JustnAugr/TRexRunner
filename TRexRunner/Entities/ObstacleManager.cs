@@ -10,7 +10,7 @@ public class ObstacleManager : IGameEntity
     
     private const float MIN_SPAWN_DISTANCE = 20f; //initial distance on game start
     private const int MIN_OBSTACLE_DISTANCE = 10; //in points, not pixels
-    private const int MAX_OBSTACLE_DISTANCE = 30; //in points, not pixels
+    private const int MAX_OBSTACLE_DISTANCE = 25; //in points, not pixels
 
     //we're going to scale this value by the current speed to make sure we have a better min dist between obstacles
     private const int OBSTACLE_DISTANCE_SPEED_TOLERANCE = 5;

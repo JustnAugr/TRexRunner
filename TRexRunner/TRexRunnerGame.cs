@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -83,7 +84,8 @@ public class TRexRunnerGame : Game
         _sfxScoreReached = Content.Load<SoundEffect>(ASSET_NAME_SFX_SCORE_REACHED);
 
         _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
-        _invertedSpriteSheet = _spriteSheetTexture.InvertColors(Color.Transparent); //inverting the transparency ends up weird
+        _invertedSpriteSheet =
+            _spriteSheetTexture.InvertColors(Color.Transparent); //inverting the transparency ends up weird
         _fadeInTexture = new Texture2D(GraphicsDevice, 1, 1);
         _fadeInTexture.SetData(new[] { Color.White }); //texture of 1x1 pixel, that is White
 
@@ -121,6 +123,12 @@ public class TRexRunnerGame : Game
         _obstacleManager.IsEnabled = false;
         _gameOverScreen.IsEnabled = true;
         _sfxHit.Play();
+
+        if (_scoreBoard.DisplayScore > _scoreBoard.HiScore)
+        {
+            Debug.WriteLine("New highscore set!: " + _scoreBoard.DisplayScore);
+            _scoreBoard.HiScore = _scoreBoard.DisplayScore;
+        }
     }
 
     private void TrexOnJumpComplete(object sender, EventArgs e)
@@ -191,6 +199,9 @@ public class TRexRunnerGame : Game
     {
         if (State != GameState.Initial)
             return false;
+
+        //debugging
+        //_scoreBoard.score = 99_900;
 
         State = GameState.Transition;
         _trex.BeginJump();

@@ -21,22 +21,30 @@ public class ScoreBoard : IGameEntity
     private const int TEXTURE_COORDS_HI_WIDTH = 20;
     private const int TEXTURE_COORDS_HI_HEIGHT = 13;
     private const int HI_TEXT_MARGIN = 28;
-    private const float SCORE_INCREMENT_MULTIPLIER = .05f;
+    private const float SCORE_INCREMENT_MULTIPLIER = .03f;
 
     private const float FLASH_ANIMATION_FRAME_LENGTH = 1/3f;
     private const int FLASH_ANIMATION_FLASH_COUNT = 4;
+
+    private const int MAX_SCORE = 99_999; //wow you can format ints with underscores
 
     private Texture2D _texture;
     private bool _isPlayingFlashAnimation;
     private float _flashAnimationTime;
 
-    public double Score { get; set; }
+    public double Score
+    {
+        get => _score;
+        set => _score = Math.Max(0, Math.Min(value, MAX_SCORE));
+    }
+
     public int DisplayScore => (int)Math.Floor(Score);
     public int HiScore { get; set; }
 
     public bool HasHiScore => HiScore > 0;
     private Trex _trex;
     private SoundEffect _scoreSfx;
+    private double _score;
 
     public int DrawOrder { get; set; } = 100; //high value for a UI element
 
