@@ -5,7 +5,7 @@ namespace TRexRunner.Graphics;
 
 public class Sprite
 {
-    public Texture2D Texture { get; private set; }
+    public Texture2D Texture { get; set; }
 
     public int X { get; set; }
     public int Y { get; set; }

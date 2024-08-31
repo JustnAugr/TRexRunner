@@ -30,6 +30,7 @@ public class SkyManager : IGameEntity, IDayNightCycle
 
     private readonly Trex _trex;
     private readonly Texture2D _spriteSheet;
+    private readonly Texture2D _invertedSpriteSheet;
     private readonly EntityManager _entityManager;
     private readonly ScoreBoard _scoreBoard;
     private Random _random;
@@ -53,10 +54,12 @@ public class SkyManager : IGameEntity, IDayNightCycle
 
     public bool IsNight => _normalizedScreenColor < 0.5f;
 
-    public SkyManager(Trex trex, Texture2D spriteSheet, EntityManager entityManager, ScoreBoard scoreBoard)
+    public SkyManager(Trex trex, Texture2D spriteSheet, Texture2D invertedSpriteSheet, EntityManager entityManager,
+        ScoreBoard scoreBoard)
     {
         _trex = trex;
         _spriteSheet = spriteSheet;
+        _invertedSpriteSheet = invertedSpriteSheet;
         _entityManager = entityManager;
         _scoreBoard = scoreBoard;
         _random = new Random();
@@ -101,7 +104,7 @@ public class SkyManager : IGameEntity, IDayNightCycle
         {
             TransitionToDayTime();
         }
-        
+
         //if were restarting after a gameover, transition back to day on restart
         if (_scoreBoard.DisplayScore < NIGHT_TIME_SCORE && (IsNight || _isTransitioningToNight))
         {
@@ -122,6 +125,12 @@ public class SkyManager : IGameEntity, IDayNightCycle
 
             if (_normalizedScreenColor < 0)
                 _normalizedScreenColor = 0;
+
+            //invert colors on certain entities
+            if (_normalizedScreenColor <= 0.5f)
+            {
+                InvertTextures(_invertedSpriteSheet);
+            }
         }
         else if (_isTransitioningToDay)
         {
@@ -130,6 +139,19 @@ public class SkyManager : IGameEntity, IDayNightCycle
 
             if (_normalizedScreenColor > 1)
                 _normalizedScreenColor = 1;
+
+            if (_normalizedScreenColor >= 0.5f)
+            {
+                InvertTextures(_spriteSheet);
+            }
+        }
+    }
+
+    private void InvertTextures(Texture2D spriteSheet)
+    {
+        foreach (var entity in _entityManager.GetEntitiesOfType<ITextureInvertible>())
+        {
+            entity.UpdateTexture(spriteSheet);
         }
     }
 

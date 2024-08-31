@@ -14,12 +14,11 @@ public class SpriteAnimation
     //array itself ie spriteAnimation[0] to access the 0th frame via the GetFrame(index) method
     //just a bit easier than doing spriteAnimation.GetFrame(0)
     public SpriteAnimationFrame this[int index] => GetFrame(index);
-
     public bool IsPlaying { get; private set; }
-
     public float PlaybackProgress { get; private set; }
-
     public bool ShouldLoop { get; set; } = true;
+
+    public int FrameCount => _frames.Count;
 
     public SpriteAnimationFrame CurrentFrame
     {

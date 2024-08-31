@@ -83,7 +83,7 @@ public class TRexRunnerGame : Game
         _sfxScoreReached = Content.Load<SoundEffect>(ASSET_NAME_SFX_SCORE_REACHED);
 
         _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
-        _invertedSpriteSheet = _spriteSheetTexture.InvertColors();
+        _invertedSpriteSheet = _spriteSheetTexture.InvertColors(Color.Transparent); //inverting the transparency ends up weird
         _fadeInTexture = new Texture2D(GraphicsDevice, 1, 1);
         _fadeInTexture.SetData(new[] { Color.White }); //texture of 1x1 pixel, that is White
 
@@ -103,7 +103,7 @@ public class TRexRunnerGame : Game
         _obstacleManager = new ObstacleManager(_entityManager, _trex, _scoreBoard, _spriteSheetTexture);
         _gameOverScreen = new GameOverScreen(_spriteSheetTexture,
             new Vector2(WINDOW_WIDTH / 2 - GameOverScreen.GAME_OVER_SPRITE_WIDTH / 2, WINDOW_HEIGHT / 2 - 30), this);
-        _skyManager = new SkyManager(_trex, _spriteSheetTexture, _entityManager, _scoreBoard);
+        _skyManager = new SkyManager(_trex, _spriteSheetTexture, _invertedSpriteSheet, _entityManager, _scoreBoard);
 
         _entityManager.AddEntity(_trex);
         _entityManager.AddEntity(_groundManager);

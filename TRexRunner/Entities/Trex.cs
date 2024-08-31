@@ -6,7 +6,7 @@ using TRexRunner.Graphics;
 
 namespace TRexRunner.Entities;
 
-public class Trex : IGameEntity, ICollidable
+public class Trex : IGameEntity, ICollidable, ITextureInvertible
 {
     private const float JUMP_START_VELOCITY = -480f; //pixels per second, negative bc up from down
     private const float GRAVITY = 1600f;
@@ -338,5 +338,26 @@ public class Trex : IGameEntity, ICollidable
     protected virtual void OnDied()
     {
         Died?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void UpdateTexture(Texture2D newTexture)
+    {
+        _idleSprite.Texture = newTexture;
+        _deadSprite.Texture = newTexture;
+        _idleBackgroundSprite.Texture = newTexture;
+        _idleBlinkSprite.Texture = newTexture;
+
+        for (var i = 0; i < _blinkAnimation.FrameCount; i++)
+        {
+            _blinkAnimation.GetFrame(i).Sprite.Texture = newTexture;
+        }
+        for (var i = 0; i < _duckAnimation.FrameCount; i++)
+        {
+            _duckAnimation.GetFrame(i).Sprite.Texture = newTexture;
+        }
+        for (var i = 0; i < _runAnimation.FrameCount; i++)
+        {
+            _runAnimation.GetFrame(i).Sprite.Texture = newTexture;
+        }
     }
 }

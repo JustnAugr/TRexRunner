@@ -10,7 +10,8 @@ public static class Texture2DExt
     //extension method and class needs to be static, needs to have first parameter as "this"
     //to allow us to call this method on all Texture2D objects as if this was a real method on the
     //instance, via someText.InvertColors()
-    public static Texture2D InvertColors(this Texture2D texture)
+    //don't invert the excludeColor if provided
+    public static Texture2D InvertColors(this Texture2D texture, Color? excludeColor = null)
     {
         if (texture is null)
             throw new ArgumentNullException(nameof(texture), "Texture can't be null to be inverted!");
@@ -29,7 +30,8 @@ public static class Texture2DExt
 
         //fancy LINQ method similar to mapcar for our inversion instead of a foreach which would also work, + leave the alpha alone
         //alpha being opacity which we don't need to invert
-        Color[] invertedPixelData = pixelData.Select(p => new Color(255 - p.R, 255 - p.G, 255 - p.B, p.A)).ToArray();
+        Color[] invertedPixelData = pixelData.Select(p =>
+            p == excludeColor ? p : new Color(255 - p.R, 255 - p.G, 255 - p.B, p.A)).ToArray();
         result.SetData(invertedPixelData);
 
         return result;
