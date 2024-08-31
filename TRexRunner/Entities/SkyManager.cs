@@ -45,6 +45,9 @@ public class SkyManager : IGameEntity, IDayNightCycle
     private bool _isTransitioningToNight;
     private bool _isTransitioningToDay;
 
+    private Color[] _textureData;
+    private Color[] _invertedTextureData;
+
     public int DrawOrder { get; set; } = 0;
     public int NightCount { get; private set; }
 
@@ -63,6 +66,12 @@ public class SkyManager : IGameEntity, IDayNightCycle
         _entityManager = entityManager;
         _scoreBoard = scoreBoard;
         _random = new Random();
+
+        //store color data for regular texture data and inverted texture data
+        _textureData = new Color[_spriteSheet.Width * _spriteSheet.Height];
+        _invertedTextureData = new Color[_invertedSpriteSheet.Width * _invertedSpriteSheet.Height];
+        _spriteSheet.GetData(_textureData);
+        _invertedSpriteSheet.GetData(_invertedTextureData);
     }
 
     public void Update(GameTime gameTime)
@@ -129,7 +138,7 @@ public class SkyManager : IGameEntity, IDayNightCycle
             //invert colors on certain entities
             if (_normalizedScreenColor <= 0.5f)
             {
-                InvertTextures(_invertedSpriteSheet);
+                InvertTextures();
             }
         }
         else if (_isTransitioningToDay)
@@ -142,17 +151,16 @@ public class SkyManager : IGameEntity, IDayNightCycle
 
             if (_normalizedScreenColor >= 0.5f)
             {
-                InvertTextures(_spriteSheet);
+                InvertTextures();
             }
         }
     }
 
-    private void InvertTextures(Texture2D spriteSheet)
+    private void InvertTextures()
     {
-        foreach (var entity in _entityManager.GetEntitiesOfType<ITextureInvertible>())
-        {
-            entity.UpdateTexture(spriteSheet);
-        }
+        //because EVERY entity is being inverted, we can simply invert the colors of the spriteSheet object,
+        //which is used by EVERY entity to draw sprites/animations/frames etc
+        _spriteSheet.SetData(IsNight ? _invertedTextureData : _textureData);
     }
 
     private bool TransitionToNightTime()

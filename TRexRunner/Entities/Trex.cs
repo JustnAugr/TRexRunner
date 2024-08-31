@@ -6,7 +6,7 @@ using TRexRunner.Graphics;
 
 namespace TRexRunner.Entities;
 
-public class Trex : IGameEntity, ICollidable, ITextureInvertible
+public class Trex : IGameEntity, ICollidable
 {
     private const float JUMP_START_VELOCITY = -480f; //pixels per second, negative bc up from down
     private const float GRAVITY = 1600f;
@@ -78,7 +78,7 @@ public class Trex : IGameEntity, ICollidable, ITextureInvertible
                 TREX_DEFAULT_SPRITE_HEIGHT);
             COLLISION_BOX_INSET = 10;
             rect.Inflate(-COLLISION_BOX_INSET, -COLLISION_BOX_INSET);
-            
+
             //I'd prefer to pass in the proper height of the sprite into the new Rectangle call tbh
             if (State == TrexState.Ducking)
             {
@@ -338,26 +338,5 @@ public class Trex : IGameEntity, ICollidable, ITextureInvertible
     protected virtual void OnDied()
     {
         Died?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void UpdateTexture(Texture2D newTexture)
-    {
-        _idleSprite.Texture = newTexture;
-        _deadSprite.Texture = newTexture;
-        _idleBackgroundSprite.Texture = newTexture;
-        _idleBlinkSprite.Texture = newTexture;
-
-        for (var i = 0; i < _blinkAnimation.FrameCount; i++)
-        {
-            _blinkAnimation.GetFrame(i).Sprite.Texture = newTexture;
-        }
-        for (var i = 0; i < _duckAnimation.FrameCount; i++)
-        {
-            _duckAnimation.GetFrame(i).Sprite.Texture = newTexture;
-        }
-        for (var i = 0; i < _runAnimation.FrameCount; i++)
-        {
-            _runAnimation.GetFrame(i).Sprite.Texture = newTexture;
-        }
     }
 }
