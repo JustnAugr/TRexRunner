@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TRexRunner.Entities;
+using TRexRunner.Extensions;
 using TRexRunner.Graphics;
 using TRexRunner.System;
 
@@ -35,6 +36,7 @@ public class TRexRunnerGame : Game
     private SoundEffect _sfxScoreReached;
     private SoundEffect _sfxButtonPress;
     private Texture2D _spriteSheetTexture;
+    private Texture2D _invertedSpriteSheet;
     private Texture2D _fadeInTexture;
     private float _fadeInTexturePosX;
     private InputController _inputController;
@@ -81,6 +83,7 @@ public class TRexRunnerGame : Game
         _sfxScoreReached = Content.Load<SoundEffect>(ASSET_NAME_SFX_SCORE_REACHED);
 
         _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
+        _invertedSpriteSheet = _spriteSheetTexture.InvertColors();
         _fadeInTexture = new Texture2D(GraphicsDevice, 1, 1);
         _fadeInTexture.SetData(new[] { Color.White }); //texture of 1x1 pixel, that is White
 
