@@ -14,6 +14,12 @@ namespace TRexRunner;
 
 public class TRexRunnerGame : Game
 {
+    public enum DisplayMode
+    {
+        Default,
+        Zoomed
+    }
+
     public const string GAME_TITLE = "T-Rex Runner";
 
     //storing constants for our assets in the content pipeline
@@ -32,6 +38,7 @@ public class TRexRunnerGame : Game
     private const int SCORE_BOARD_POS_X = WINDOW_WIDTH - 130;
     private const int SCORE_BOARD_POS_Y = 10;
     private const string SAVE_FILE_NAME = "Save.dat";
+    private const int DISPLAY_ZOOM_FACTOR = 2;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -54,8 +61,12 @@ public class TRexRunnerGame : Game
     private GameOverScreen _gameOverScreen;
     private SkyManager _skyManager;
     private DateTime _highscoreDate;
+    private Matrix _transformMatrix = Matrix.Identity;
 
     public GameState State { get; private set; }
+    public DisplayMode WindowDisplayMode { get; set; } = DisplayMode.Default;
+
+    public float ZoomFactor => WindowDisplayMode is DisplayMode.Default ? 1 : DISPLAY_ZOOM_FACTOR;
 
     public TRexRunnerGame()
     {
@@ -190,6 +201,12 @@ public class TRexRunnerGame : Game
         {
             ResetSaveState();
         }
+        
+        //secret display changing button
+        if (keyboardState.IsKeyDown(Keys.F2) && !_previousKeyboardState.IsKeyDown(Keys.F2))
+        {
+            ToggleDisplayMode();
+        }
 
         _previousKeyboardState = keyboardState;
     }
@@ -202,7 +219,7 @@ public class TRexRunnerGame : Game
 
         //PointClamp makes sure the positioning of texture coordinates is always snapped to pixels, and doesn't move in
         //subpixel areas
-        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: _transformMatrix);
 
         _entityManager.Draw(_spriteBatch, gameTime);
 
@@ -300,5 +317,30 @@ public class TRexRunnerGame : Game
         _scoreBoard.HiScore = 0;
         _highscoreDate = default(DateTime);
         SaveGame();
+    }
+
+    private void ToggleDisplayMode()
+    {
+        if (WindowDisplayMode is DisplayMode.Default)
+        {
+            WindowDisplayMode = DisplayMode.Zoomed;
+
+            _graphics.PreferredBackBufferHeight = WINDOW_HEIGHT * DISPLAY_ZOOM_FACTOR;
+            _graphics.PreferredBackBufferWidth = WINDOW_WIDTH * DISPLAY_ZOOM_FACTOR;
+
+            //scale x and y, don't scale z because no z
+            _transformMatrix = Matrix.Identity * Matrix.CreateScale(DISPLAY_ZOOM_FACTOR, DISPLAY_ZOOM_FACTOR, 1);
+        }
+        else
+        {
+            WindowDisplayMode = DisplayMode.Default;
+            
+            _graphics.PreferredBackBufferHeight = WINDOW_HEIGHT;
+            _graphics.PreferredBackBufferWidth = WINDOW_WIDTH;
+            
+            _transformMatrix = Matrix.Identity;
+        }
+        
+        _graphics.ApplyChanges();
     }
 }

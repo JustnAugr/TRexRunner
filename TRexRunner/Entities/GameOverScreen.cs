@@ -25,12 +25,25 @@ public class GameOverScreen : IGameEntity
     public int DrawOrder { get; set; } = 100;
     public bool IsEnabled { get; set; }
 
-    public Vector2 ButtonPosition => _position + //draw below, and in the middle of the "GAME OVER" text
-                                     new Vector2(GAME_OVER_SPRITE_WIDTH / 2 - BUTTON_SPRITE_WIDTH / 2,
-                                         GAME_OVER_SPRITE_HEIGHT + 20);
+    public Vector2 ButtonPosition =>
+        _position + //_position here is the top left of the entire game over text + button so we draw button
+        //below it (height + 20), and then get to the middle of the game over text (gameover/2) and then go a bit further left to draw the button (- button/2)
+        new Vector2(GAME_OVER_SPRITE_WIDTH / 2 - BUTTON_SPRITE_WIDTH / 2,
+            GAME_OVER_SPRITE_HEIGHT + 20);
 
-    public Rectangle ButtonBounds => //this constructor takes two points, top left and bottom right
-        new(ButtonPosition.ToPoint(), new Point(BUTTON_SPRITE_WIDTH, BUTTON_SPRITE_HEIGHT));
+    public Rectangle ButtonBounds
+    {
+        get
+        {
+            //need to scale the positions by the zoom factor
+            var buttonPositionPoint = (ButtonPosition * _game.ZoomFactor).ToPoint();
+            var buttonSpriteWidth = (int)(BUTTON_SPRITE_WIDTH * _game.ZoomFactor);
+            var buttonSpriteHeight = (int)(BUTTON_SPRITE_HEIGHT * _game.ZoomFactor);
+
+            //this constructor takes two points, top left and bottom right
+            return new(buttonPositionPoint, new Point(buttonSpriteWidth, buttonSpriteHeight));
+        }
+    }
 
     public GameOverScreen(Texture2D spriteSheet, Vector2 position, TRexRunnerGame game)
     {
