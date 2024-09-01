@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TRexRunner.Entities;
 using TRexRunner.Extensions;
-using TRexRunner.Graphics;
 using TRexRunner.System;
 
 namespace TRexRunner;
 
 public class TRexRunnerGame : Game
 {
+    public const string GAME_TITLE = "T-Rex Runner";
+
     //storing constants for our assets in the content pipeline
     private const string ASSET_NAME_SPRITESHEET = "TrexSpritesheet";
     private const string ASSET_NAME_SFX_HIT = "hit";
@@ -76,7 +74,10 @@ public class TRexRunnerGame : Game
 
         _graphics.PreferredBackBufferHeight = WINDOW_HEIGHT;
         _graphics.PreferredBackBufferWidth = WINDOW_WIDTH;
+        _graphics.SynchronizeWithVerticalRetrace = true; //vsync 
         _graphics.ApplyChanges();
+
+        Window.Title = GAME_TITLE;
     }
 
     protected override void LoadContent()
@@ -138,7 +139,7 @@ public class TRexRunnerGame : Game
             Debug.WriteLine("New highscore set!: " + _scoreBoard.DisplayScore);
             _scoreBoard.HiScore = _scoreBoard.DisplayScore;
             _highscoreDate = DateTime.Now;
-            
+
             SaveGame();
         }
     }
@@ -184,6 +185,12 @@ public class TRexRunnerGame : Game
 
         _entityManager.Update(gameTime);
 
+        //secret button to reset the highscore that's saved
+        if (keyboardState.IsKeyDown(Keys.F12) && !_previousKeyboardState.IsKeyDown(Keys.F12))
+        {
+            ResetSaveState();
+        }
+
         _previousKeyboardState = keyboardState;
     }
 
@@ -193,7 +200,9 @@ public class TRexRunnerGame : Game
         //depending on our score and if its night
         GraphicsDevice.Clear(_skyManager?.ClearColor ?? Color.White);
 
-        _spriteBatch.Begin();
+        //PointClamp makes sure the positioning of texture coordinates is always snapped to pixels, and doesn't move in
+        //subpixel areas
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
         _entityManager.Draw(_spriteBatch, gameTime);
 
@@ -283,5 +292,13 @@ public class TRexRunnerGame : Game
         {
             Debug.WriteLine("Unable to load save game, error: " + e.Message);
         }
+    }
+
+    private void ResetSaveState()
+    {
+        //reset the highscore
+        _scoreBoard.HiScore = 0;
+        _highscoreDate = default(DateTime);
+        SaveGame();
     }
 }
